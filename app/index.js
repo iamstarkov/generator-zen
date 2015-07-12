@@ -1,11 +1,9 @@
 'use strict';
 
 var yeoman = require('yeoman-generator');
-/*
 var normalizeUrl = require('normalize-url');
 var humanizeUrl = require('humanize-url');
 var _s = require('underscore.string');
-*/
 
 module.exports = yeoman.generators.Base.extend({
   init: function () {

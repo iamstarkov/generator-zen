@@ -1,0 +1,33 @@
+{
+  "name": "<%= moduleName %>",
+  "version": "0.0.0",
+  "description": "<%= moduleDesc %>",
+  "main": "index.es5.js",
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- --require babel/register",
+    "precoveralls": "npm run coverage",
+    "coveralls": "coveralls < coverage/lcov.info",
+    "test": "mocha --require babel/register",
+    "tdd": "npm test -- --watch",
+    "transpile": "babel index.js > index.es5.js",
+    "prepublish": "npm run transpile",
+    "postpublish": "rm *.es5.js && git push --follow-tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<%= githubUsername %>/<%= moduleName %>.git"
+  },
+  "keywords": [],
+  "author": "<%= name %> <<%= email %>> (<%= humanizedWebsite %>)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/<%= githubUsername %>/<%= moduleName %>/issues"
+  },
+  "homepage": "https://github.com/<%= githubUsername %>/<%= moduleName %>#readme",
+  "devDependencies": {
+    "babel": "*",
+    "coveralls": "*",
+    "istanbul": "*",
+    "mocha": "*"
+  }
+}

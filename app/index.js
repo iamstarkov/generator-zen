@@ -80,7 +80,7 @@ module.exports = yeoman.generators.Base.extend({
       mv('editorconfig',  '.editorconfig');
       mv('gitignore',     '.gitignore');
       mv('npmignore',     '.npmignore');
-      mv('travis.yml',     '.travis.yml');
+      mv('travis.yml',    '.travis.yml');
       mv('_package.json', 'package.json');
       mv('index.js',      'index.js');
       mv('test.js',       'test.js');

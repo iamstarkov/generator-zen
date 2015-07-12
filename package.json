@@ -1,0 +1,43 @@
+{
+  "name": "generator-tiny-es6-nm",
+  "version": "0.0.0",
+  "description": "Scaffold out a tiny ES6 node module",
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- --require babel/register",
+    "precoveralls": "npm run coverage",
+    "coveralls": "coveralls < coverage/lcov.info",
+    "test": "mocha --require babel/register",
+    "tdd": "npm test -- --watch",
+    "transpile": "babel index.js > index.es5.js",
+    "prepublish": "npm run transpile",
+    "postpublish": "rm *.es5.js && git push --follow-tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamstarkov/generator-tiny-es6-nm.git"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "plugin",
+    "boilerplate",
+    "template",
+    "scaffold",
+    "node",
+    "module",
+    "node_module",
+    "node-module",
+    "es6"
+  ],
+  "author": "Vladimir Starkov <iamstarkov@gmail.com> (https://iamstarkov.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iamstarkov/generator-tiny-es6-nm/issues"
+  },
+  "homepage": "https://github.com/iamstarkov/generator-tiny-es6-nm#readme",
+  "devDependencies": {
+    "babel": "*",
+    "coveralls": "*",
+    "istanbul": "*",
+    "mocha": "*"
+  }
+}

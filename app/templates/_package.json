@@ -19,7 +19,7 @@
   },
   "keywords": <%= moduleKeywords %>,
   "author": "<%= name %> <<%= email %>> (<%= humanizedWebsite %>)",
-  "license": "MIT",
+  "license": "<%= moduleLicense %>",
   "bugs": {
     "url": "https://github.com/<%= githubUsername %>/<%= moduleName %>/issues"
   },

@@ -3,14 +3,11 @@
   "version": "0.0.2",
   "description": "Scaffold out a tiny ES6 node module",
   "scripts": {
-    "coverage": "istanbul cover _mocha -- --require babel/register",
+    "coverage": "istanbul cover _mocha",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
-    "test": "mocha --require babel/register",
-    "tdd": "npm test -- --watch",
-    "transpile": "babel index.js > index.es5.js",
-    "prepublish": "npm run transpile",
-    "postpublish": "rm *.es5.js && git push --follow-tags"
+    "test": "mocha",
+    "tdd": "npm test -- --watch"
   },
   "repository": {
     "type": "git",

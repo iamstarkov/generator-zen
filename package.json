@@ -1,6 +1,6 @@
 {
   "name": "generator-tiny-es6-nm",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Scaffold out a tiny ES6 node module",
   "scripts": {
     "coverage": "istanbul cover _mocha -- --require babel/register",

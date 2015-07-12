@@ -39,5 +39,8 @@
     "coveralls": "*",
     "istanbul": "*",
     "mocha": "*"
+  },
+  "dependencies": {
+    "yeoman-generator": "^0.20.1"
   }
 }

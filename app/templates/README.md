@@ -40,10 +40,9 @@ Default: `false`
 
 Lorem ipsum.
 
-
 ## License
 
-MIT © [<%= name %>](<%= website %>)
+<%= moduleLicense %> © [<%= name %>](<%= website %>)
 
 [npm-url]: https://npmjs.org/package/<%= moduleName %>
 [npm-image]: https://img.shields.io/npm/v/<%= moduleName %>.svg?style=flat-square

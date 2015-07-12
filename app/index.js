@@ -27,6 +27,10 @@ module.exports = yeoman.generators.Base.extend({
       name: 'moduleKeywords',
       message: 'keywords:'
     }, {
+      name: 'moduleLicense',
+      default: 'MIT',
+      message: 'license:'
+    }, {
       name: 'githubUsername',
       message: 'What is your GitHub username?',
       store: true,
@@ -48,6 +52,7 @@ module.exports = yeoman.generators.Base.extend({
         moduleName: props.moduleName,
         moduleDesc: props.moduleDesc,
         moduleKeywords: props.moduleKeywords.split(','),
+        moduleLicense: props.moduleLicense,
         camelModuleName: _s.camelize(props.moduleName),
         githubUsername: props.githubUsername,
         name: this.user.git.name(),

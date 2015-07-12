@@ -1,6 +1,6 @@
 {
   "name": "<%= moduleName %>",
-  "version": "0.0.0",
+  "version": "<%= moduleVersion %>",
   "description": "<%= moduleDesc %>",
   "main": "index.es5.js",
   "scripts": {

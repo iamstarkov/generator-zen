@@ -18,6 +18,11 @@ module.exports = yeoman.generators.Base.extend({
         return _s.slugify(val);
       }
     }, {
+      name: 'moduleVersion',
+      message: 'version:',
+      store: true,
+      default: '0.0.0',
+    }, {
       name: 'moduleDesc',
       message: 'description:',
       filter: function (val) {
@@ -28,8 +33,9 @@ module.exports = yeoman.generators.Base.extend({
       message: 'keywords:'
     }, {
       name: 'moduleLicense',
-      default: 'MIT',
       message: 'license:'
+      store: true,
+      default: 'MIT',
     }, {
       name: 'githubUsername',
       message: 'What is your GitHub username?',
@@ -50,6 +56,7 @@ module.exports = yeoman.generators.Base.extend({
     }], function (props) {
       var tpl = {
         moduleName: props.moduleName,
+        moduleVersion: props.moduleVersion,
         moduleDesc: props.moduleDesc,
         moduleKeywords: props.moduleKeywords.split(','),
         moduleLicense: props.moduleLicense,

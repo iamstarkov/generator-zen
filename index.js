@@ -1,4 +1,5 @@
 'use strict';
+
 var yeoman = require('yeoman-generator');
 /*
 var normalizeUrl = require('normalize-url');
@@ -73,8 +74,7 @@ module.exports = yeoman.generators.Base.extend({
       }.bind(this);
 
       this.fs.copyTpl([
-        this.templatePath() + '/**',
-        '!**/cli.js'
+        this.templatePath() + '/**'
       ], this.destinationPath(), tpl);
 
       mv('editorconfig',  '.editorconfig');

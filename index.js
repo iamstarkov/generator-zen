@@ -33,7 +33,7 @@ module.exports = yeoman.generators.Base.extend({
       message: 'keywords:'
     }, {
       name: 'moduleLicense',
-      message: 'license:'
+      message: 'license:',
       store: true,
       default: 'MIT',
     }, {

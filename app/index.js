@@ -23,10 +23,7 @@ module.exports = yeoman.generators.Base.extend({
       default: '0.0.0',
     }, {
       name: 'moduleDesc',
-      message: 'description:',
-      filter: function (val) {
-        return _s.slugify(val);
-      }
+      message: 'description:'
     }, {
       name: 'moduleLicense',
       message: 'license:',
@@ -76,13 +73,13 @@ module.exports = yeoman.generators.Base.extend({
       mv('npmignore',     '.npmignore');
       mv('travis.yml',    '.travis.yml');
       mv('_package.json', 'package.json');
-      mv('index.js',      'index.js');
-      mv('test.js',       'test.js');
+      mv('_index.js',      'index.js');
+      mv('_test.js',       'test.js');
 
       cb();
     }.bind(this));
   },
   install: function () {
-    this.installDependencies({bower: false});
+    this.npmInstall();
   }
 });

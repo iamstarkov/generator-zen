@@ -28,9 +28,6 @@ module.exports = yeoman.generators.Base.extend({
         return _s.slugify(val);
       }
     }, {
-      name: 'moduleKeywords',
-      message: 'keywords:'
-    }, {
       name: 'moduleLicense',
       message: 'license:',
       store: true,
@@ -57,7 +54,6 @@ module.exports = yeoman.generators.Base.extend({
         moduleName: props.moduleName,
         moduleVersion: props.moduleVersion,
         moduleDesc: props.moduleDesc,
-        moduleKeywords: props.moduleKeywords.split(','),
         moduleLicense: props.moduleLicense,
         camelModuleName: _s.camelize(props.moduleName),
         githubUsername: props.githubUsername,

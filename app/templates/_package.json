@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/<%= githubUsername %>/<%= moduleName %>.git"
   },
-  "keywords": <%= moduleKeywords %>,
+  "keywords": [],
   "author": "<%= name %> <<%= email %>> (<%= humanizedWebsite %>)",
   "license": "<%= moduleLicense %>",
   "bugs": {

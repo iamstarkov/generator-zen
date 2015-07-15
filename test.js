@@ -28,7 +28,7 @@ describe('generator', function () {
       'package.json',
       'index.js',
       'test.js',
-      'readme.md',
+      'README.md',
     ];
 
     helpers.mockPrompt(this.generator, {

@@ -24,6 +24,7 @@
     "module",
     "node_module",
     "node-module",
+    "tiny",
     "es6"
   ],
   "author": "Vladimir Starkov <iamstarkov@gmail.com> (https://iamstarkov.com/)",

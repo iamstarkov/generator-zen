@@ -34,30 +34,11 @@ describe('generator', function () {
     helpers.mockPrompt(this.generator, {
       moduleName: 'test',
       githubUsername: 'test',
-      website: 'test.com',
-      cli: false
+      website: 'test.com'
     });
 
     this.generator.run(function () {
       assert.file(expected);
-      assert.noFile('cli.js');
-      cb();
-    });
-  });
-
-  it('CLI option', function (cb) {
-    helpers.mockPrompt(this.generator, {
-      moduleName: 'test',
-      githubUsername: 'test',
-      website: 'test.com',
-      cli: true
-    });
-
-    this.generator.run(function () {
-      assert.file('cli.js');
-      assert.fileContent('package.json', /"bin":/);
-      assert.fileContent('package.json', /"bin": "cli.js"/);
-      assert.fileContent('package.json', /"meow"/);
       cb();
     });
   });

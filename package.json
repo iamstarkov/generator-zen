@@ -36,7 +36,8 @@
     "babel": "*",
     "coveralls": "*",
     "istanbul": "*",
-    "mocha": "*"
+    "mocha": "*",
+    "yeoman-assert": "^2.0.0"
   },
   "dependencies": {
     "humanize-url": "^1.0.1",

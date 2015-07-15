@@ -73,8 +73,8 @@ module.exports = yeoman.generators.Base.extend({
       mv('npmignore',     '.npmignore');
       mv('travis.yml',    '.travis.yml');
       mv('_package.json', 'package.json');
-      mv('_index.js',      'index.js');
-      mv('_test.js',       'test.js');
+      mv('_index.js',     'index.js');
+      mv('_test.js',      'test.js');
 
       cb();
     }.bind(this));

@@ -1,5 +1,5 @@
 import { equal } from 'assert';
-import <%= camelModuleName %> from './';
+import <%= camelModuleName %> from './index';
 
 it('should <%= camelModuleName %>', () => {
   equal(<%= camelModuleName %>('unicorns'), 'unicorns');

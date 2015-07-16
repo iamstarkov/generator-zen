@@ -53,7 +53,7 @@ module.exports = yeoman.generators.Base.extend({
       var tpl = {
         moduleName: props.moduleName,
         moduleDesc: props.moduleDesc,
-        moduleKeywords: props.moduleKeywords.trim().split(',').map(function(i) { return i.trim(); }),
+        moduleKeywords: (props.moduleKeywords || '').trim().split(',').map(function(i) { return (i || '').trim(); }),
         moduleVersion: props.moduleVersion,
         moduleLicense: props.moduleLicense,
         camelModuleName: _s.camelize(props.moduleName),

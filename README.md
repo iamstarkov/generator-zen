@@ -7,6 +7,8 @@
 
 > Scaffold out a tiny ES6 node module
 
+![tiny-es6-nm](http://i.imgur.com/XYg9QUz.png)
+
 ## Install
 
     npm install --global generator-tiny-es6-nm

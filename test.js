@@ -32,9 +32,10 @@ describe('generator', function () {
     ];
 
     helpers.mockPrompt(this.generator, {
-      moduleName: 'test',
-      githubUsername: 'test',
-      website: 'test.com'
+      moduleName: 'module',
+      githubUsername: 'username',
+      website: 'test.com',
+      moduleDesc: 'Your awsm module!'
     });
 
     this.generator.run(function () {

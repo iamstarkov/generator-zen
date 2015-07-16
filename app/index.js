@@ -17,13 +17,16 @@ module.exports = yeoman.generators.Base.extend({
         return _s.slugify(val);
       }
     }, {
+      name: 'moduleDesc',
+      message: 'description:'
+    }, {
+      name: 'moduleKeywords',
+      message: 'keywords:'
+    }, {
       name: 'moduleVersion',
       message: 'version:',
       store: true,
       default: '0.0.0',
-    }, {
-      name: 'moduleDesc',
-      message: 'description:'
     }, {
       name: 'moduleLicense',
       message: 'license:',
@@ -31,14 +34,14 @@ module.exports = yeoman.generators.Base.extend({
       default: 'MIT',
     }, {
       name: 'githubUsername',
-      message: 'What is your GitHub username?',
+      message: 'github username:',
       store: true,
       validate: function (val) {
         return val.length > 0 ? true : 'You have to provide a username';
       }
     }, {
       name: 'website',
-      message: 'What is the URL of your website?',
+      message: 'website:',
       store: true,
       validate: function (val) {
         return val.length > 0 ? true : 'You have to provide a website URL';
@@ -49,8 +52,9 @@ module.exports = yeoman.generators.Base.extend({
     }], function (props) {
       var tpl = {
         moduleName: props.moduleName,
-        moduleVersion: props.moduleVersion,
         moduleDesc: props.moduleDesc,
+        moduleKeywords: props.moduleKeywords.trim().split(',').map(function(i) { return i.trim(); }),
+        moduleVersion: props.moduleVersion,
         moduleLicense: props.moduleLicense,
         camelModuleName: _s.camelize(props.moduleName),
         githubUsername: props.githubUsername,

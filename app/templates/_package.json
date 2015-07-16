@@ -17,7 +17,10 @@
     "type": "git",
     "url": "git+https://github.com/<%= githubUsername %>/<%= moduleName %>.git"
   },
-  "keywords": [],
+  "keywords": [
+    <% moduleKeywords.forEach(function(keyword, i, arr) { %>"<%= keyword %>"<% if (i !== arr.length - 1) { %>,
+    <% } %><% }); %>
+  ],
   "author": "<%= name %> <<%= email %>> (<%= website %>)",
   "license": "<%= moduleLicense %>",
   "bugs": {

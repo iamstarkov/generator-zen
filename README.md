@@ -17,7 +17,7 @@ Features:
 * Memorizing fields: your name, email, website and github username and license
 * And obviously ![Badges](https://img.shields.io/badge/Badges-  👍-brightgreen.svg?style=flat-square) for npm, tests, coverage and dependencies
 
-![tiny-es-nm](http://i.imgur.com/LTip6aK.png)
+![soylent example](http://i.imgur.com/10C4sIn.png)
 
 ## Install
 

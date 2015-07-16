@@ -1,5 +1,5 @@
 {
-  "name": "generator-tiny-es6-nm",
+  "name": "generator-tiny-es-nm",
   "version": "0.1.1",
   "description": "Scaffold out a tiny ES6 node module",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamstarkov/generator-tiny-es6-nm.git"
+    "url": "git+https://github.com/iamstarkov/generator-tiny-es-nm.git"
   },
   "keywords": [
     "yeoman-generator",
@@ -30,9 +30,9 @@
   "author": "Vladimir Starkov <iamstarkov@gmail.com> (https://iamstarkov.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iamstarkov/generator-tiny-es6-nm/issues"
+    "url": "https://github.com/iamstarkov/generator-tiny-es-nm/issues"
   },
-  "homepage": "https://github.com/iamstarkov/generator-tiny-es6-nm#readme",
+  "homepage": "https://github.com/iamstarkov/generator-tiny-es-nm#readme",
   "devDependencies": {
     "babel": "*",
     "coveralls": "*",

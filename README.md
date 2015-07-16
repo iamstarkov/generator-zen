@@ -7,7 +7,7 @@
 
 > Scaffold out a tiny ES6 node module
 
-![tiny-es6-nm](http://i.imgur.com/LTip6aK.png)
+![tiny-es-nm](http://i.imgur.com/LTip6aK.png)
 
 ## Install
 
@@ -17,7 +17,7 @@
 
 With [yo](https://github.com/yeoman/yo):
 
-    yo tiny-es6-nm
+    yo tiny-es-nm
 
 ## License
 

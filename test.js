@@ -13,7 +13,7 @@ describe('generator', function () {
         return;
       }
 
-      this.generator = helpers.createGenerator('tiny-es6-nm:app', deps, null, {skipInstall: true});
+      this.generator = helpers.createGenerator('tiny-es-nm:app', deps, null, {skipInstall: true});
       cb();
     }.bind(this));
   });

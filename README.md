@@ -7,17 +7,56 @@
 
 > Scaffold out a tiny ES6 node module
 
+Features:
+
+* ES6 workflow with prepublish script
+* Trustworthy README with Install, Usage, Api and License sections
+* Testability, `tdd` mode and test coverage
+* Ready to use with travis and coveralls
+* Support for package.json’s fields, your github username too
+* Memorizing fields: your name, email, website and github username and license
+* And obviously ![Badges](https://img.shields.io/badge/Badges-  👍-brightgreen.svg?style=flat-square) for npm, tests, coverage and dependencies
+
 ![tiny-es-nm](http://i.imgur.com/LTip6aK.png)
 
 ## Install
 
-    npm install --global generator-tiny-es-nm
+    npm install --global yo generator-tiny-es-nm
 
 ## Usage
 
-With [yo](https://github.com/yeoman/yo):
+    # create folder for your project
+    mkdir awsm-project
+    cd awsm-project
 
+    # run generator
     yo tiny-es-nm
+
+    # make initial commit
+    git init
+    git commit -am 'init commit'
+
+
+### Next steps:
+
+1. Push it to your github repo
+2. Enable your project on travis: https://travis-ci.org/profile/
+  ![travis](http://i.imgur.com/mN4EvhC.png)
+3. Enable your project on coveralls: https://coveralls.io/repos/new
+  ![coveralls](http://i.imgur.com/ApfXMLl.png)
+4. Write some tests in tests.js
+5. Run tdd mode: `npm run tdd`
+5. Write your module to pass the tests
+7. When all tests are green bump major version and publish it:
+
+  ```js
+  npm version major
+  npm publish
+  ```
+
+  Your package will be tagged, commited, transpiled, published, cleaned up and pushed all the changes to github automagically ✨, take a look at scripts section.
+
+5. You are awesome! ✨💫
 
 ## License
 

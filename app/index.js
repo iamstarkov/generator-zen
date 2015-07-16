@@ -64,22 +64,18 @@ module.exports = yeoman.generators.Base.extend({
         humanizedWebsite: humanizeUrl(props.website)
       };
 
-      var mv = function (from, to) {
-        this.fs.move(this.destinationPath(from), this.destinationPath(to));
+      var cpTpl = function (from, to) {
+        this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), tpl);
       }.bind(this);
 
-      this.fs.copyTpl([
-        this.templatePath() + '/**'
-      ], this.destinationPath(), tpl);
-
-      mv('editorconfig',  '.editorconfig');
-      mv('gitignore',     '.gitignore');
-      mv('npmignore',     '.npmignore');
-      mv('travis.yml',    '.travis.yml');
-      mv('_README.md',     'README.md');
-      mv('_package.json', 'package.json');
-      mv('_index.js',     'index.js');
-      mv('_test.js',      'test.js');
+      cpTpl('_index.js',     'index.js');
+      cpTpl('_package.json', 'package.json');
+      cpTpl('_README.md',     'README.md');
+      cpTpl('_test.js',      'test.js');
+      cpTpl('editorconfig',  '.editorconfig');
+      cpTpl('gitignore',     '.gitignore');
+      cpTpl('npmignore',     '.npmignore');
+      cpTpl('travis.yml',    '.travis.yml');
 
       cb();
     }.bind(this));

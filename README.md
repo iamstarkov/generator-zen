@@ -7,7 +7,7 @@
 
 > Scaffold out a tiny ES6 node module
 
-![tiny-es6-nm](http://i.imgur.com/XYg9QUz.png)
+![tiny-es6-nm](http://i.imgur.com/LTip6aK.png)
 
 ## Install
 

@@ -15,7 +15,9 @@ Features:
 * Ready to use with travis and coveralls
 * Support for package.json’s fields, your github username too
 * Memorizing fields: your name, email, website and github username and license
-* And obviously ![Badges](https://img.shields.io/badge/Badges-  👍-brightgreen.svg?style=flat-square) for npm, tests, coverage and dependencies
+* And obviously ![Badges][badge] for npm, tests, coverage and dependencies
+
+[badge]: https://img.shields.io/badge/Badges-👍-brightgreen.svg?style=flat-square
 
 ![soylent example](http://i.imgur.com/10C4sIn.png)
 
@@ -46,17 +48,14 @@ Features:
   ![coveralls](http://i.imgur.com/ApfXMLl.png)
 4. Write some tests in tests.js
 5. Run tdd mode: `npm run tdd`
-5. Write your module to pass the tests
+6. Write your module to pass the tests
 7. When all tests are green bump major version and publish it:
-
   ```js
   npm version major
   npm publish
   ```
-
   Your package will be tagged, commited, transpiled, published, cleaned up and pushed all the changes to github automagically ✨, take a look at scripts section.
-
-5. You are awesome! ✨💫
+8. You are awesome! ✨💫
 
 ## License
 

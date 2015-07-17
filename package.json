@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "Scaffold out a tiny ES6 node module",
   "scripts": {
-    "coverage": "istanbul cover _mocha",
+    "coverage": "istanbul cover _mocha app/index.js",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
     "test": "mocha",

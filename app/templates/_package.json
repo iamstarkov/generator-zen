@@ -4,7 +4,7 @@
   "description": "<%= moduleDesc %>",
   "main": "index.es5.js",
   "scripts": {
-    "coverage": "istanbul cover _mocha -- --require babel/register",
+    "coverage": "istanbul cover _mocha index.js -- --require babel/register",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
     "test": "mocha --require babel/register",

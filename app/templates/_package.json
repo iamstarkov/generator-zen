@@ -30,6 +30,7 @@
   "devDependencies": {
     "babel": "*",
     "coveralls": "*",
+    "assert": "*",
     "istanbul": "*",
     "mocha": "*"
   }

@@ -11,12 +11,13 @@ Features:
 
 * ES6 workflow with prepublish script
 * Trustworthy README with Install, Usage, Api and License sections
-* Testability, `tdd` mode and test coverage
+* [Easy testability, `tdd` mode](tdd) and test coverage
 * Ready to use with travis and coveralls
 * Support for package.json’s fields, your github username too
 * Memorizing fields: your name, email, website and github username and license
 * And obviously ![Badges][badges] for npm, tests, coverage and dependencies
 
+[tdd]: https://iamstarkov.com/start-with-testing/
 [badges]: https://img.shields.io/badge/with-badges-brightgreen.svg?style=flat-square
 
 ![soylent example](http://i.imgur.com/10C4sIn.png)

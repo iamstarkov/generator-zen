@@ -4,7 +4,7 @@
   "description": "<%= moduleDesc %>",
   "main": "index.es5.js",
   "scripts": {
-    "coverage": "istanbul cover _mocha index.js -- --require babel/register",
+    "coverage": "isparta cover _mocha index.js -- --require babel/register",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
     "test": "mocha --require babel/register",
@@ -28,10 +28,10 @@
   },
   "homepage": "https://github.com/<%= githubUsername %>/<%= moduleName %>#readme",
   "devDependencies": {
+    "assert": "*",
     "babel": "*",
     "coveralls": "*",
-    "assert": "*",
-    "istanbul": "*",
+    "isparta": "*",
     "mocha": "*"
   }
 }

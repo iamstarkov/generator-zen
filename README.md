@@ -12,7 +12,7 @@ Features:
 * ES6 workflow with prepublish script
 * Trustworthy README with Install, Usage, Api and License sections
 * [Easy testability, `tdd` mode][tdd] and test coverage
-* Ready to use with travis and coveralls
+* [Ready to use with travis and coveralls](#next-steps)
 * Support for package.json’s fields, your github username too
 * Memorizing fields: your name, email, website and github username and license
 * And obviously ![Badges][badges] for npm, tests, coverage and dependencies

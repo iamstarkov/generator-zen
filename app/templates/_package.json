@@ -11,7 +11,9 @@
     "tdd": "npm test -- --watch",
     "transpile": "babel index.js > index.es5.js",
     "prepublish": "npm run transpile",
-    "postpublish": "rm *.es5.js && git push --follow-tags"
+    "clean": "trash index.es5.js",
+    "push": "git push --follow-tags",
+    "postpublish": "npm-run-all clean push"
   },
   "repository": {
     "type": "git",
@@ -33,6 +35,7 @@
     "coveralls": "*",
     "isparta": "*",
     "mocha": "*",
+    "npm-run-all": "*",
     "trash": "*"
   }
 }

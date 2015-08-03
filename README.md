@@ -7,15 +7,12 @@
 
 > Scaffold out a tiny ES6 node module
 
-Features:
-
-* ES6 workflow with prepublish script
-* Trustworthy README with Install, Usage, Api and License sections
-* [Easy testability, `tdd` mode][tdd] and test coverage
+* `npm init` compliant
+* ES6 workflow
+* Structured and trustworthy README
+* Tests, tdd and test coverage
 * [Ready to use with travis and coveralls](#next-steps)
-* Support for package.json’s fields, your github username too
-* Memorizing fields: your name, email, website and github username and license
-* And obviously ![Badges][badges] for npm, tests, coverage and dependencies
+* ![Badges][badges]
 
 [tdd]: https://iamstarkov.com/start-with-testing/
 [badges]: https://img.shields.io/badge/with-badges-brightgreen.svg?style=flat-square

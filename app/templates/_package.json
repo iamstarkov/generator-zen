@@ -9,7 +9,7 @@
     "coveralls": "coveralls < coverage/lcov.info",
     "test": "mocha --require babel/register",
     "tdd": "npm test -- --watch",
-    "transpile": "babel index.js > index.es5.js",
+    "transpile": "babel index.js --out-file index.es5.js",
     "prepublish": "npm run transpile",
     "clean": "trash index.es5.js",
     "push": "git push --follow-tags",

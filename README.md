@@ -48,9 +48,10 @@
 5. Run tdd mode: `npm run tdd`
 6. Write your module to pass the tests
 7. When all tests are green bump major version and publish it:
-  ```js
-  npm version major
-  npm publish
+  ```javascript
+  
+npm version major
+npm publish
   ```
   Your package will be tagged, commited, transpiled, published, cleaned up and pushed all the changes to github automagically ✨, take a look at scripts section.
 8. You are awesome! ✨💫

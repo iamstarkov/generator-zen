@@ -2,19 +2,25 @@
   "name": "<%= moduleName %>",
   "version": "<%= moduleVersion %>",
   "description": "<%= moduleDesc %>",
-  "main": "index.es5.js",
+  "main": "dist/index.js",
+  "files": [
+    "bin/",
+    "dist/",
+    "LICENSE"
+  ],
   "scripts": {
-    "coverage": "isparta cover _mocha index.js -- --require babel/register",
-    "precoveralls": "npm run coverage",
-    "coveralls": "coveralls < coverage/lcov.info",
-    "test": "mocha --require babel/register",
+    "clean": "rimraf dist",
+    "lint": "eslint src test",
+    "build": "npm run clean && npm run lint && babel --optional runtime src -d dist",
+    "test": "npm run build && babel-node test/*.js",
+    "coverage": "babel-node node_modules/.bin/isparta cover test/*.js",
+    "coveralls": "npm run coverage && coveralls < coverage/lcov.info && rimraf ./coverage",
     "tdd": "npm test -- --watch",
-    "transpile": "babel index.js --out-file index.es5.js",
-    "prepublish": "npm run transpile",
-    "clean": "trash index.es5.js",
-    "push": "git push --follow-tags",
-    "postpublish": "npm-run-all clean push"
+    "prepublish": "npm run build"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/<%= githubUsername %>/<%= moduleName %>.git"
@@ -30,12 +36,15 @@
   },
   "homepage": "https://github.com/<%= githubUsername %>/<%= moduleName %>#readme",
   "devDependencies": {
-    "assert": "*",
+    "eslint": "*",
+    "babel-eslint": "*",
     "babel": "*",
     "coveralls": "*",
     "isparta": "*",
-    "mocha": "*",
-    "npm-run-all": "*",
-    "trash": "*"
+    "tape": "*",
+    "rimraf": "*"
+  },
+  "dependencies": {
+    "babel-core": "*"
   }
 }

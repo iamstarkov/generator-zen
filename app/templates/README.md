@@ -16,7 +16,7 @@
 ```js
 import <%= camelModuleName %> from '<%= moduleName %>';
 
-<%= camelModuleName %>('unicorns'); // unicorns
+<%= camelModuleName %>(true); // true
 ```
 
 ## API
@@ -28,7 +28,7 @@ import <%= camelModuleName %> from '<%= moduleName %>';
 *Required*  
 Type: `String`
 
-Lorem ipsum.
+Lorem ipsum dolor sit amet.
 
 #### options
 
@@ -37,7 +37,7 @@ Lorem ipsum.
 Type: `Boolean`  
 Default: `false`
 
-Lorem ipsum.
+Lorem ipsum dolor sit amet.
 
 ## License
 

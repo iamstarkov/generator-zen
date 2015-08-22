@@ -4,10 +4,8 @@
   "description": "Scaffold out a tiny ES6 node module",
   "scripts": {
     "coverage": "istanbul cover _mocha app/index.js",
-    "precoveralls": "npm run coverage",
-    "coveralls": "coveralls < coverage/lcov.info",
+    "coveralls": "npm run coverage && coveralls < coverage/lcov.info && rimraf ./coverage",
     "test": "mocha",
-    "tdd": "npm test -- --watch",
     "postpublish": "git push --follow-tags"
   },
   "repository": {
@@ -28,17 +26,22 @@
     "es6"
   ],
   "author": "Vladimir Starkov <iamstarkov@gmail.com> (https://iamstarkov.com/)",
+  "contributors": [
+    {
+      "name": "Jorge Bucaran",
+      "email": "jbucaran@me.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/iamstarkov/generator-tiny-es-nm/issues"
   },
   "homepage": "https://github.com/iamstarkov/generator-tiny-es-nm#readme",
   "devDependencies": {
-    "babel": "*",
     "coveralls": "*",
     "istanbul": "*",
     "mocha": "*",
-    "yeoman-assert": "^2.0.0"
+    "rimraf": "*"
   },
   "dependencies": {
     "humanize-url": "^1.0.1",

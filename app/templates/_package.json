@@ -11,7 +11,7 @@
     "tdd": "npm test -- --watch",
     "transpile": "babel index.js --out-file index.es5.js",
     "prepublish": "npm run transpile",
-    "clean": "trash index.es5.js",
+    "clean": "rimraf index.es5.js",
     "push": "git push --follow-tags",
     "postpublish": "npm-run-all clean push"
   },
@@ -36,6 +36,6 @@
     "isparta": "*",
     "mocha": "*",
     "npm-run-all": "*",
-    "trash": "*"
+    "rimraf": "*"
   }
 }

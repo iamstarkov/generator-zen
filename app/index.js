@@ -68,14 +68,14 @@ module.exports = yeoman.generators.Base.extend({
         this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), tpl);
       }.bind(this);
 
-      cpTpl('_index.js',     'index.js');
-      cpTpl('_package.json', 'package.json');
+      cpTpl('_index.js',      'index.js');
+      cpTpl('_package.json',  'package.json');
       cpTpl('_README.md',     'README.md');
-      cpTpl('_test.js',      'test.js');
-      cpTpl('editorconfig',  '.editorconfig');
-      cpTpl('gitignore',     '.gitignore');
-      cpTpl('npmignore',     '.npmignore');
-      cpTpl('travis.yml',    '.travis.yml');
+      cpTpl('_index.spec.js', 'test/index.spec.js');
+      cpTpl('editorconfig',   '.editorconfig');
+      cpTpl('gitignore',      '.gitignore');
+      cpTpl('npmignore',      '.npmignore');
+      cpTpl('travis.yml',     '.travis.yml');
 
       cb();
     }.bind(this));

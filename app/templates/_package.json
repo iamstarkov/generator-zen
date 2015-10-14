@@ -4,7 +4,7 @@
   "description": "<%= moduleDesc %>",
   "main": "index.es5.js",
   "scripts": {
-    "coverage": "isparta cover _mocha index.js -- --require babel/register",
+    "coverage": "babel-node node_modules/.bin/isparta cover _mocha",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
     "test": "mocha --require babel/register",

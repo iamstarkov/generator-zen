@@ -27,7 +27,7 @@ describe('generator', function () {
       '.travis.yml',
       'package.json',
       'index.js',
-      'test.js',
+      'test/index.spec.js',
       'README.md',
     ];
 

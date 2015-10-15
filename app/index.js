@@ -75,10 +75,16 @@ module.exports = yeoman.generators.Base.extend({
       cpTpl('editorconfig',  '.editorconfig');
       cpTpl('gitignore',     '.gitignore');
       cpTpl('npmignore',     '.npmignore');
-      cpTpl('travis.yml',    '.travis.yml');
 
       cb();
     }.bind(this));
+  },
+  writing: function () {
+    this.composeWith('travis', { options: {
+      config: { after_script: ['npm run coveralls'] }
+    }}, {
+      local: require.resolve('generator-travis/generators/app')
+    });
   },
   install: function () {
     this.installDependencies({bower: false});

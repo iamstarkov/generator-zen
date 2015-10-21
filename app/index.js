@@ -3,19 +3,43 @@
 var yeoman = require('yeoman-generator');
 var normalizeUrl = require('normalize-url');
 var humanizeUrl = require('humanize-url');
-var _s = require('underscore.string');
+var slugify = require('underscore.string').slugify;
+var camelize = require('underscore.string').camelize;
+
+function ifEmpty(errorMessage, val) {
+  return val.length > 0 ? true : errorMessage;
+}
 
 module.exports = yeoman.generators.Base.extend({
   init: function () {
     var cb = this.async();
 
     this.prompt([{
+      name: 'name',
+      message: 'your name:',
+      store: true,
+      validate: ifEmpty.bind(null, 'You have to provide name')
+    }, {
+      name: 'email',
+      message: 'your email:',
+      store: true,
+      validate: ifEmpty.bind(null, 'You have to provide email')
+    }, {
+      name: 'website',
+      message: 'website:',
+      store: true,
+      validate: ifEmpty.bind(null, 'You have to provide website'),
+      filter: normalizeUrl
+   }, {
+     name: 'githubUsername',
+     message: 'github username:',
+     store: true,
+     validate: ifEmpty.bind(null, 'You have to provide a username')
+   }, {
       name: 'moduleName',
       message: 'name:',
       default: this.appname.replace(/\s/g, '-'),
-      filter: function (val) {
-        return _s.slugify(val);
-      }
+      filter: slugify
     }, {
       name: 'moduleDesc',
       message: 'description:'
@@ -32,23 +56,6 @@ module.exports = yeoman.generators.Base.extend({
       message: 'license:',
       store: true,
       default: 'MIT',
-    }, {
-      name: 'githubUsername',
-      message: 'github username:',
-      store: true,
-      validate: function (val) {
-        return val.length > 0 ? true : 'You have to provide a username';
-      }
-    }, {
-      name: 'website',
-      message: 'website:',
-      store: true,
-      validate: function (val) {
-        return val.length > 0 ? true : 'You have to provide a website URL';
-      },
-      filter: function (val) {
-        return normalizeUrl(val);
-      }
     }], function (props) {
       var tpl = {
         moduleName: props.moduleName,
@@ -56,10 +63,10 @@ module.exports = yeoman.generators.Base.extend({
         moduleKeywords: (props.moduleKeywords || '').trim().split(',').map(function(i) { return (i || '').trim(); }),
         moduleVersion: props.moduleVersion,
         moduleLicense: props.moduleLicense,
-        camelModuleName: _s.camelize(props.moduleName),
+        camelModuleName: camelize(props.moduleName),
         githubUsername: props.githubUsername,
-        name: this.user.git.name(),
-        email: this.user.git.email(),
+        name: props.name,
+        email: props.email,
         website: props.website,
         humanizedWebsite: humanizeUrl(props.website)
       };

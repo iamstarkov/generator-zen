@@ -87,11 +87,14 @@ module.exports = yeoman.generators.Base.extend({
     }.bind(this));
   },
   writing: function () {
-    this.composeWith('travis', { options: {
-      config: { after_script: ['npm run coveralls'] }
-    }}, {
-      local: require.resolve('generator-travis/generators/app')
-    });
+    [
+      { name: 'travis', options: { config: { after_script: ['npm run coveralls'] }}},
+      { name: 'git-init' }
+    ].forEach(function(generator) {
+      this.composeWith(generator.name, { options: generator.options || {} }, {
+        local: require.resolve('generator-' + generator.name + '/generators/app')
+      });
+    }.bind(this));
   },
   install: function () {
     this.installDependencies({bower: false});

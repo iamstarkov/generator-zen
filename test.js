@@ -29,6 +29,7 @@ describe('generator', function () {
       'index.js',
       'test.js',
       'README.md',
+      '.git',
     ];
 
     helpers.mockPrompt(this.generator, {

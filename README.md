@@ -2,7 +2,6 @@
 
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
-[![Coveralls Status][coveralls-image]][coveralls-url]
 [![Dependency Status][depstat-image]][depstat-url]
 
 > Scaffold out a tiny ES6 node module
@@ -17,7 +16,7 @@
 [tdd]: https://iamstarkov.com/start-with-testing/
 [badges]: https://img.shields.io/badge/with-badges-brightgreen.svg?style=flat-square
 
-![soylent example](http://i.imgur.com/10C4sIn.png)
+![soylent example](http://i.imgur.com/1akKK4Q.png)
 
 ## Install
 
@@ -33,8 +32,8 @@
     yo tiny-es-nm
 
     # make initial commit
-    git init
-    git commit -am 'init commit'
+    git add .
+    git commit -m 'init'
 
 
 ### Next steps:
@@ -48,13 +47,13 @@
 5. Run tdd mode: `npm run tdd`
 6. Write your module to pass the tests
 7. When all tests are green bump major version and publish it:
-  ```javascript
-  
-npm version major
-npm publish
+  ```
+  npm version major
+  npm publish
   ```
   Your package will be tagged, commited, transpiled, published, cleaned up and pushed all the changes to github automagically ✨, take a look at scripts section.
-8. You are awesome! ✨💫
+
+You are awesome! ✨💫
 
 ## License
 

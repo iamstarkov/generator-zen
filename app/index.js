@@ -89,7 +89,8 @@ module.exports = yeoman.generators.Base.extend({
   writing: function () {
     [
       { name: 'travis', options: { config: { after_script: ['npm run coveralls'] }}},
-      { name: 'git-init' }
+      { name: 'git-init' },
+      { name: 'babel-init' },
     ].forEach(function(generator) {
       this.composeWith(generator.name, { options: generator.options || {} }, {
         local: require.resolve('generator-' + generator.name + '/generators/app')

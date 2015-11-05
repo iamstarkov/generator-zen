@@ -31,7 +31,6 @@
   "homepage": "https://github.com/<%= githubUsername %>/<%= moduleName %>#readme",
   "devDependencies": {
     "assert": "*",
-    "babel": "*",
     "coveralls": "*",
     "isparta": "*",
     "mocha": "*",

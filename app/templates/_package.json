@@ -4,10 +4,10 @@
   "description": "<%= moduleDesc %>",
   "main": "index.es5.js",
   "scripts": {
-    "coverage": "isparta cover _mocha index.js -- --require babel/register",
+    "coverage": "isparta cover _mocha index.js -- --require babel-core/register",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
-    "test": "mocha --require babel/register",
+    "test": "mocha --require babel-core/register",
     "tdd": "npm test -- --watch",
     "transpile": "babel index.js --out-file index.es5.js",
     "prepublish": "npm run transpile",

@@ -65,8 +65,5 @@ MIT © [Vladimir Starkov](https://iamstarkov.com/)
 [travis-url]: https://travis-ci.org/iamstarkov/generator-tiny-es-nm
 [travis-image]: https://img.shields.io/travis/iamstarkov/generator-tiny-es-nm.svg?style=flat-square
 
-[coveralls-url]: https://coveralls.io/r/iamstarkov/generator-tiny-es-nm
-[coveralls-image]: https://img.shields.io/coveralls/iamstarkov/generator-tiny-es-nm.svg?style=flat-square
-
 [depstat-url]: https://david-dm.org/iamstarkov/generator-tiny-es-nm
 [depstat-image]: https://david-dm.org/iamstarkov/generator-tiny-es-nm.svg?style=flat-square

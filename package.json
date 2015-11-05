@@ -3,9 +3,6 @@
   "version": "1.1.2",
   "description": "Scaffold out a tiny ES6 node module",
   "scripts": {
-    "coverage": "istanbul cover _mocha app/index.js",
-    "precoveralls": "npm run coverage",
-    "coveralls": "coveralls < coverage/lcov.info",
     "test": "mocha -t 240000",
     "tdd": "npm test -- --watch",
     "postpublish": "git push --follow-tags"
@@ -35,7 +32,6 @@
   "homepage": "https://github.com/iamstarkov/generator-tiny-es-nm#readme",
   "devDependencies": {
     "babel": "*",
-    "coveralls": "*",
     "istanbul": "*",
     "mocha": "*",
     "yeoman-assert": "^2.0.0"

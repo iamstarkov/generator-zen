@@ -6,7 +6,7 @@
     "coverage": "istanbul cover _mocha app/index.js",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
-    "test": "mocha",
+    "test": "mocha -t 240000",
     "tdd": "npm test -- --watch",
     "postpublish": "git push --follow-tags"
   },

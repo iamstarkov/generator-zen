@@ -1,6 +1,6 @@
 {
   "name": "generator-tiny-es-nm",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Scaffold out a tiny ES6 node module",
   "scripts": {
     "test": "mocha -t 240000",

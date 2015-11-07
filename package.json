@@ -31,9 +31,7 @@
   },
   "homepage": "https://github.com/iamstarkov/generator-tiny-es-nm#readme",
   "devDependencies": {
-    "babel": "*",
-    "istanbul": "*",
-    "mocha": "*",
+    "mocha": "^2.3.3",
     "yeoman-assert": "^2.0.0"
   },
   "dependencies": {

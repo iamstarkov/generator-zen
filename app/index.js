@@ -5,6 +5,9 @@ var normalizeUrl = require('normalize-url');
 var humanizeUrl = require('humanize-url');
 var slugify = require('underscore.string').slugify;
 var camelize = require('underscore.string').camelize;
+var objectAssign = require('object-assign');
+
+var merge = objectAssign.bind(Object, {});
 
 function ifEmpty(errorMessage, val) {
   return val.length > 0 ? true : errorMessage;
@@ -92,9 +95,11 @@ module.exports = yeoman.generators.Base.extend({
       { name: 'git-init' },
       { name: 'babel-init' },
     ].forEach(function(generator) {
-      this.composeWith(generator.name, { options: generator.options || {} }, {
-        local: require.resolve('generator-' + generator.name + '/generators/app')
-      });
+      this.composeWith(
+        generator.name,
+        { options: merge(this.options, (generator.options || {})) },
+        { local: require.resolve('generator-' + generator.name + '/generators/app') }
+      );
     }.bind(this));
   },
   install: function () {

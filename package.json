@@ -3,7 +3,7 @@
   "version": "1.1.4",
   "description": "Scaffold out a tiny ES6 node module",
   "scripts": {
-    "test": "mocha -t 240000",
+    "test": "mocha",
     "tdd": "npm test -- --watch",
     "postpublish": "git push --follow-tags"
   },

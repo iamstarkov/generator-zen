@@ -93,11 +93,11 @@ module.exports = yeoman.generators.Base.extend({
     [
       { name: 'travis', options: { config: { after_script: ['npm run coveralls'] }}},
       { name: 'git-init' },
-      { name: 'babel-init' },
+      { name: 'babel-init', options: { 'skip-install': this.options['skip-install'] }},
     ].forEach(function(generator) {
       this.composeWith(
         generator.name,
-        { options: merge(this.options, (generator.options || {})) },
+        { options: (generator.options || {}) },
         { local: require.resolve('generator-' + generator.name + '/generators/app') }
       );
     }.bind(this));

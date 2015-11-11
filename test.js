@@ -6,6 +6,9 @@ var assert = require('yeoman-assert');
 describe('generator', function () {
   it('generates expected files', function (done) {
     helpers.run(path.join(__dirname, './app'))
+      .withGenerators([
+        [helpers.createDummyGenerator(), 'generator-babel-init/generators/app']
+      ])
       .withPrompts({
         moduleName: 'module',
         githubUsername: 'username',

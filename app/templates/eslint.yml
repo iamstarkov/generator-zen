@@ -1,0 +1,7 @@
+---
+env:
+  <% eslintEnvironments.map(function (environment) { %>
+  - <%= environment %>: true
+  <% }); %>
+
+extends: <%= eslintPreset === 'airbnb' ? 'airbnb/base' : eslintPreset %>

@@ -59,6 +59,43 @@ module.exports = yeoman.generators.Base.extend({
       message: 'license:',
       store: true,
       default: 'MIT',
+    }, {
+      type: 'confirm',
+      name: 'eslint',
+      message: 'use ESLint:',
+      store: true,
+      default: true,
+    }, {
+      type: 'checkbox',
+      name: 'eslintEnvironments',
+      message: 'ESLint environments:',
+      choices: [
+        { name: 'amd' },
+        { name: 'browser' },
+        { name: 'commonjs', checked: true },
+        { name: 'es6', checked: true },
+        { name: 'jquery' },
+        { name: 'mocha', checked: true },
+        { name: 'node', checked: true },
+      ],
+      store: true,
+      when: function (answers) {
+        return answers.eslint;
+      },
+    }, {
+      type: 'list',
+      name: 'eslintPreset',
+      message: 'ESLint preset:',
+      choices: [
+        { name: 'Airbnb', value: 'airbnb' },
+        { name: 'ESLint recommended', value: 'eslint:recommended' },
+        { name: 'Standard Style', value: 'standard' },
+      ],
+      store: true,
+      default: 1,
+      when: function (answers) {
+        return answers.eslint;
+      },
     }], function (props) {
       var tpl = {
         moduleName: props.moduleName,
@@ -71,7 +108,10 @@ module.exports = yeoman.generators.Base.extend({
         name: props.name,
         email: props.email,
         website: props.website,
-        humanizedWebsite: humanizeUrl(props.website)
+        humanizedWebsite: humanizeUrl(props.website),
+        eslint: props.eslint,
+        eslintEnvironments: props.eslintEnvironments,
+        eslintPreset: props.eslintPreset,
       };
 
       var cpTpl = function (from, to) {
@@ -83,6 +123,9 @@ module.exports = yeoman.generators.Base.extend({
       cpTpl('_README.md',     'README.md');
       cpTpl('_test.js',      'test.js');
       cpTpl('editorconfig',  '.editorconfig');
+      if (tpl.eslint) {
+        cpTpl('eslint.yml',     '.eslint.yml');
+      }
       cpTpl('gitignore',     '.gitignore');
       cpTpl('npmignore',     '.npmignore');
 

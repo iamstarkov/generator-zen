@@ -10,11 +10,15 @@ describe('generator', function () {
         moduleName: 'module',
         githubUsername: 'username',
         website: 'test.com',
-        moduleDesc: 'Your awsm module!'
+        moduleDesc: 'Your awsm module!',
+        eslint: true,
+        eslintEnvironments: ['node', 'es6'],
+        eslintPreset: 'airbnb',
       })
       .on('end', function() {
         assert.file([
           '.editorconfig',
+          '.eslint.yml',
           '.gitignore',
           '.npmignore',
           '.travis.yml',

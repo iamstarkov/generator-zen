@@ -8,7 +8,9 @@
     "coverage": "babel-node ./node_modules/.bin/isparta cover _mocha index.js -- --compilers js:babel-core/register",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
-    "test": "mocha --require babel-core/register",
+    "lint": "eslint .",
+    "mocha": "mocha --require babel-core/register",
+    "test": "npm-run-all lint mocha",
     "tdd": "npm test -- --watch",
     "transpile": "babel index.js --out-file index.es5.js",
     "prepublish": "npm run transpile",
@@ -33,6 +35,12 @@
   "devDependencies": {
     "assert": "*",
     "coveralls": "*",
+    <% if (eslint) { %>
+    "eslint": "~1.0.0",
+    <% if (eslintPreset && eslintPreset !== 'eslint:recommended') { %>
+    "eslint-config-<%= eslintPreset %>": "*",
+    <% } %>
+    <% } %>
     "isparta": "*",
     "mocha": "*",
     "npm-run-all": "*",

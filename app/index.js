@@ -5,13 +5,26 @@ var normalizeUrl = require('normalize-url');
 var humanizeUrl = require('humanize-url');
 var slugify = require('underscore.string').slugify;
 var camelize = require('underscore.string').camelize;
-var objectAssign = require('object-assign');
+var R = require('ramda');
 
-var merge = objectAssign.bind(Object, {});
+// ifEmpty :: String -> String -> Boolean
+var ifEmpty = R.curryN(2, function(errorMessage, val) {
+  return (val.length > 0) ? true : errorMessage;
+});
 
-function ifEmpty(errorMessage, val) {
-  return val.length > 0 ? true : errorMessage;
-}
+// splitKeywords :: String -> [String]
+var splitKeywords = R.pipe(
+  R.defaultTo(''),
+  R.split(','),
+  R.map(R.trim),
+  R.filter(R.pipe(R.isEmpty, R.not))
+);
+
+// name :: String | Object -> String
+var name = R.ifElse(R.is(String), R.identity, R.pipe(R.keys, R.head));
+
+// options :: String | Object -> Object
+var options = R.ifElse(R.is(String), R.always({ }), R.pipe(R.values, R.head));
 
 module.exports = yeoman.generators.Base.extend({
   init: function () {
@@ -21,23 +34,23 @@ module.exports = yeoman.generators.Base.extend({
       name: 'name',
       message: 'your name:',
       store: true,
-      validate: ifEmpty.bind(null, 'You have to provide name')
+      validate: ifEmpty('You have to provide name')
     }, {
       name: 'email',
       message: 'your email:',
       store: true,
-      validate: ifEmpty.bind(null, 'You have to provide email')
+      validate: ifEmpty('You have to provide email')
     }, {
       name: 'website',
       message: 'website:',
       store: true,
-      validate: ifEmpty.bind(null, 'You have to provide website'),
+      validate: ifEmpty('You have to provide website'),
       filter: normalizeUrl
    }, {
      name: 'githubUsername',
      message: 'github username:',
      store: true,
-     validate: ifEmpty.bind(null, 'You have to provide a username')
+     validate: ifEmpty('You have to provide a username')
    }, {
       name: 'moduleName',
       message: 'name:',
@@ -63,7 +76,7 @@ module.exports = yeoman.generators.Base.extend({
       var tpl = {
         moduleName: props.moduleName,
         moduleDesc: props.moduleDesc,
-        moduleKeywords: (props.moduleKeywords || '').trim().split(',').map(function(i) { return (i || '').trim(); }),
+        moduleKeywords: splitKeywords(props.moduleKeywords),
         moduleVersion: props.moduleVersion,
         moduleLicense: props.moduleLicense,
         camelModuleName: camelize(props.moduleName),
@@ -91,18 +104,15 @@ module.exports = yeoman.generators.Base.extend({
   },
   writing: function () {
     [
-      { name: 'travis', options: { config: { after_script: ['npm run coveralls'] }}},
-      { name: 'babel', options: { config: { plugins: [ 'add-module-exports' ] }}},
-      { name: 'eslint-init', options: { config: { extends: 'airbnb/base' } } },
+      { 'travis':      { config: { after_script: ['npm run coveralls'] }}},
+      { 'babel':       { config: { plugins: [ 'add-module-exports' ] }}},
+      { 'eslint-init': { config: { extends: 'airbnb/base' } } },
       'git-init',
     ].forEach(function(input) {
-      var name = (typeof input === 'string') ? input : input.name;
-      var options = (typeof input === 'string') ? {} : input.options;
-      var optionsWithSkipInstall = Object.assign({}, options, { 'skip-install': this.options['skip-install'] });
       this.composeWith(
-        name,
-        { options: optionsWithSkipInstall },
-        { local: require.resolve('generator-' + name + '/generators/app') }
+        name(input),
+        { options: R.merge(options(input), { 'skip-install': this.options['skip-install'] }) },
+        { local: require.resolve('generator-' + name(input) + '/generators/app') }
       );
     }.bind(this));
   },

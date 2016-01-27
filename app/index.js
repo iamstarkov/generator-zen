@@ -92,15 +92,17 @@ module.exports = yeoman.generators.Base.extend({
   writing: function () {
     [
       { name: 'travis', options: { config: { after_script: ['npm run coveralls'] }}},
-      { name: 'git-init' },
-      { name: 'babel', options: { config: { plugins: [ 'add-module-exports' ] },
-        'skip-install': this.options['skip-install']
-      }},
-    ].forEach(function(generator) {
+      { name: 'babel', options: { config: { plugins: [ 'add-module-exports' ] }}},
+      { name: 'eslint-init', options: { config: { extends: 'airbnb/base' } } },
+      'git-init',
+    ].forEach(function(input) {
+      var name = (typeof input === 'string') ? input : input.name;
+      var options = (typeof input === 'string') ? {} : input.options;
+      var optionsWithSkipInstall = Object.assign({}, options, { 'skip-install': this.options['skip-install'] });
       this.composeWith(
-        generator.name,
-        { options: (generator.options || {}) },
-        { local: require.resolve('generator-' + generator.name + '/generators/app') }
+        name,
+        { options: optionsWithSkipInstall },
+        { local: require.resolve('generator-' + name + '/generators/app') }
       );
     }.bind(this));
   },

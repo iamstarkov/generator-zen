@@ -23,6 +23,7 @@ describe('generator', function () {
           'index.js',
           'test.js',
           'README.md',
+          '.eslintrc.json',
           '.git',
         ]);
         done();

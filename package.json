@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "generator-babel": "^1.0.3",
+    "generator-eslint-init": "^0.1.1",
     "generator-git-init": "^1.0.2",
     "generator-travis": "^1.1.4",
     "humanize-url": "^1.0.1",

@@ -106,7 +106,7 @@ module.exports = yeoman.generators.Base.extend({
     [
       { 'travis':      { config: { after_script: ['npm run coveralls'] }}},
       { 'babel':       { config: { plugins: [ 'add-module-exports' ] }}},
-      { 'eslint-init': { config: { extends: 'airbnb/base' } } },
+      { 'eslint-init': { config: { extends: 'airbnb/base', plugins: [ 'require-path-exists' ] }}},
       'git-init',
     ].forEach(function(input) {
       this.composeWith(

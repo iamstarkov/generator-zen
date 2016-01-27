@@ -9,7 +9,7 @@ var camelize = require('underscore.string').camelize;
 var R = require('ramda');
 
 // ifEmpty :: String -> String -> Boolean
-var ifEmpty = R.curryN(2, function (errorMessage, val) {
+var ifEmpty = R.curry(function (errorMessage, val) {
   return (val.length > 0) ? true : errorMessage;
 });
 

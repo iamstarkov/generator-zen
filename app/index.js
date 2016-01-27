@@ -24,7 +24,7 @@ var splitKeywords = R.pipe(
 var name = R.ifElse(R.is(String), R.identity, R.pipe(R.keys, R.head));
 
 // options :: String | Object -> Object
-var options = R.ifElse(R.is(String), R.always({ }), R.pipe(R.values, R.head));
+var options = R.ifElse(R.is(String), R.always({}), R.pipe(R.values, R.head));
 
 module.exports = yeoman.generators.Base.extend({
   init: function () {

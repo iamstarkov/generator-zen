@@ -1,4 +1,6 @@
 'use strict';
+/* eslint-env mocha */
+/* eslint-disable func-names */
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-assert');
@@ -10,9 +12,9 @@ describe('generator', function () {
         moduleName: 'module',
         githubUsername: 'username',
         website: 'test.com',
-        moduleDesc: 'Your awsm module!'
+        moduleDesc: 'Your awsm module!',
       })
-      .on('end', function() {
+      .on('end', function () {
         assert.file([
           '.editorconfig',
           '.gitignore',

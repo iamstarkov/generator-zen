@@ -1,4 +1,5 @@
 'use strict';
+/* eslint-disable func-names */
 
 var yeoman = require('yeoman-generator');
 var normalizeUrl = require('normalize-url');
@@ -8,7 +9,7 @@ var camelize = require('underscore.string').camelize;
 var R = require('ramda');
 
 // ifEmpty :: String -> String -> Boolean
-var ifEmpty = R.curryN(2, function(errorMessage, val) {
+var ifEmpty = R.curryN(2, function (errorMessage, val) {
   return (val.length > 0) ? true : errorMessage;
 });
 
@@ -34,34 +35,34 @@ module.exports = yeoman.generators.Base.extend({
       name: 'name',
       message: 'your name:',
       store: true,
-      validate: ifEmpty('You have to provide name')
+      validate: ifEmpty('You have to provide name'),
     }, {
       name: 'email',
       message: 'your email:',
       store: true,
-      validate: ifEmpty('You have to provide email')
+      validate: ifEmpty('You have to provide email'),
     }, {
       name: 'website',
       message: 'website:',
       store: true,
       validate: ifEmpty('You have to provide website'),
-      filter: normalizeUrl
-   }, {
-     name: 'githubUsername',
-     message: 'github username:',
-     store: true,
-     validate: ifEmpty('You have to provide a username')
-   }, {
+      filter: normalizeUrl,
+    }, {
+      name: 'githubUsername',
+      message: 'github username:',
+      store: true,
+      validate: ifEmpty('You have to provide a username'),
+    }, {
       name: 'moduleName',
       message: 'name:',
       default: this.appname.replace(/\s/g, '-'),
-      filter: slugify
+      filter: slugify,
     }, {
       name: 'moduleDesc',
-      message: 'description:'
+      message: 'description:',
     }, {
       name: 'moduleKeywords',
-      message: 'keywords:'
+      message: 'keywords:',
     }, {
       name: 'moduleVersion',
       message: 'version:',
@@ -84,31 +85,31 @@ module.exports = yeoman.generators.Base.extend({
         name: props.name,
         email: props.email,
         website: props.website,
-        humanizedWebsite: humanizeUrl(props.website)
+        humanizedWebsite: humanizeUrl(props.website),
       };
 
       var cpTpl = function (from, to) {
         this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), tpl);
       }.bind(this);
 
-      cpTpl('_index.js',     'index.js');
+      cpTpl('_index.js', 'index.js');
       cpTpl('_package.json', 'package.json');
-      cpTpl('_README.md',     'README.md');
-      cpTpl('_test.js',      'test.js');
-      cpTpl('editorconfig',  '.editorconfig');
-      cpTpl('gitignore',     '.gitignore');
-      cpTpl('npmignore',     '.npmignore');
+      cpTpl('_README.md', 'README.md');
+      cpTpl('_test.js', 'test.js');
+      cpTpl('editorconfig', '.editorconfig');
+      cpTpl('gitignore', '.gitignore');
+      cpTpl('npmignore', '.npmignore');
 
       cb();
     }.bind(this));
   },
   writing: function () {
     [
-      { 'travis':      { config: { after_script: ['npm run coveralls'] }}},
-      { 'babel':       { config: { plugins: [ 'add-module-exports' ] }}},
-      { 'eslint-init': { config: { extends: 'airbnb/base', plugins: [ 'require-path-exists' ] }}},
+      { travis: { config: { after_script: ['npm run coveralls'] } } },
+      { babel: { config: { plugins: ['add-module-exports'] } } },
+      { 'eslint-init': { config: { extends: 'airbnb/base', plugins: ['require-path-exists'] } } },
       'git-init',
-    ].forEach(function(input) {
+    ].forEach(function (input) {
       this.composeWith(
         name(input),
         { options: R.merge(options(input), { 'skip-install': this.options['skip-install'] }) },
@@ -117,6 +118,6 @@ module.exports = yeoman.generators.Base.extend({
     }.bind(this));
   },
   install: function () {
-    this.installDependencies({bower: false});
-  }
+    this.installDependencies({ bower: false });
+  },
 });

@@ -29,7 +29,7 @@ module.exports = yeoman.generators.Base.extend({
   init: function () {
     var cb = this.async();
 
-    this.prompt([{
+    var personPrompts = [{
       name: 'name',
       message: 'your name:',
       store: true,
@@ -50,7 +50,21 @@ module.exports = yeoman.generators.Base.extend({
       message: 'github username:',
       store: true,
       validate: ifEmpty('You have to provide a username'),
+    }];
+
+    var prefPrompts = [{
+      name: 'moduleVersion',
+      message: 'version:',
+      store: true,
+      default: '0.0.0',
     }, {
+      name: 'moduleLicense',
+      message: 'license:',
+      store: true,
+      default: 'MIT',
+    }];
+
+    var pkgPrompts = [{
       name: 'moduleName',
       message: 'name:',
       default: this.appname.replace(/\s/g, '-'),
@@ -61,17 +75,12 @@ module.exports = yeoman.generators.Base.extend({
     }, {
       name: 'moduleKeywords',
       message: 'keywords:',
-    }, {
-      name: 'moduleVersion',
-      message: 'version:',
-      store: true,
-      default: '0.0.0',
-    }, {
-      name: 'moduleLicense',
-      message: 'license:',
-      store: true,
-      default: 'MIT',
-    }], function (props) {
+    }];
+
+    this.prompt(R.concat(
+      R.concat(personPrompts, prefPrompts),
+      pkgPrompts
+    ), function (props) {
       var tpl = {
         moduleName: props.moduleName,
         moduleDesc: props.moduleDesc,

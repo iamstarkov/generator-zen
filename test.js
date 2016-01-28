@@ -2,7 +2,7 @@
 /* eslint-env mocha */
 /* eslint-disable func-names */
 var path = require('path');
-var helpers = require('yeoman-generator').test;
+var helpers = require('yeoman-test');
 var assert = require('yeoman-assert');
 
 describe('generator', function () {

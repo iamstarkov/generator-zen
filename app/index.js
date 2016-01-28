@@ -52,6 +52,10 @@ module.exports = yeoman.Base.extend({
       validate: ifEmpty('You have to provide a username'),
     }];
 
+    var savedPrompts = this._globalConfig.getAll().promptValues;
+
+    console.log('savedPrompts',savedPrompts);
+
     var prefPrompts = [{
       name: 'moduleVersion',
       message: 'version:',
@@ -77,10 +81,23 @@ module.exports = yeoman.Base.extend({
       message: 'keywords:',
     }];
 
-    this.prompt(R.concat(
+    var allPrompts = R.concat(
       R.concat(personPrompts, prefPrompts),
       pkgPrompts
-    ), function (props) {
+    )
+
+    var savedKeys = R.keys(savedPrompts);
+    var allKeys = R.map(R.prop('name'), allPrompts);
+    var diffKeys = R.difference(allKeys, savedKeys);
+    var getPrompt = item => R.find(R.propEq('name', item), allPrompts);
+    var resPrompts = R.map(getPrompt, diffKeys);
+
+    console.log('savedKeys', savedKeys);
+    console.log('allKeys', allKeys);
+
+    console.log('res', resPrompts);
+
+    this.prompt(resPrompts, function (props) {
       var tpl = {
         moduleName: props.moduleName,
         moduleDesc: props.moduleDesc,
@@ -92,7 +109,7 @@ module.exports = yeoman.Base.extend({
         name: props.name,
         email: props.email,
         website: props.website,
-        humanizedWebsite: humanizeUrl(props.website),
+        humanizedWebsite: humanizeUrl(props.website || ''),
       };
 
       var cpTpl = function (from, to) {

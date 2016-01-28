@@ -8,10 +8,8 @@ var slugify = require('underscore.string').slugify;
 var camelize = require('underscore.string').camelize;
 var R = require('ramda');
 
-// ifEmpty :: String -> String -> Boolean
-var ifEmpty = R.curry(function (errorMessage, val) {
-  return (val.length > 0) ? true : errorMessage;
-});
+// ifEmpty :: String -> String -> true | String
+var ifEmpty = R.uncurryN(2, R.pipe(R.always(R.__), R.when(R.isEmpty)));
 
 // splitKeywords :: String -> [String]
 var splitKeywords = R.pipe(

@@ -9,7 +9,7 @@ var camelize = require('underscore.string').camelize;
 var R = require('ramda');
 
 // ifEmpty :: String -> String -> true | String
-var ifEmpty = R.uncurryN(2, R.pipe(R.always(R.__), R.when(R.isEmpty)));
+var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
 
 // splitKeywords :: String -> [String]
 var splitKeywords = R.pipe(

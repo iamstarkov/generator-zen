@@ -7,6 +7,7 @@ var humanizeUrl = require('humanize-url');
 var slugify = require('underscore.string').slugify;
 var camelize = require('underscore.string').camelize;
 var R = require('ramda');
+var boom = require('./boom');
 
 // ifEmpty :: String -> String -> true | String
 var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
@@ -44,11 +45,27 @@ module.exports = yeoman.Base.extend({
     this.option('all', { type: Boolean, required: false, alias: 'a', defaults: false,
       desc: 'Ask all questions',
     });
+    this.option('yes', { type: Boolean, required: false, alias: 'y', defaults: false,
+      desc: 'Ask minimum questions, like `$ npm init --yes` ',
+    });
+    this.option('force', { type: Boolean, required: false, alias: 'f', defaults: false,
+      desc: 'Ask minimum questions, like `$ npm init --force` ',
+    });
   },
   init: function () {
     var cb = this.async();
     var savedPrompts = this._globalConfig.getAll().promptValues;
     var shouldAskAll = this.options.all || this.options.a;
+    var shouldSkipAll = this.options.force || this.options.yes;
+
+    if (shouldAskAll && shouldSkipAll) {
+      this.log(boom);
+      this.log('Congratulations! You just catch Schrödinger\'s yeoman cat.');
+      this.log('You have chosen to ask both "all" and "minimum" questions.');
+      this.log('');
+      this.log('PS. Please choose be clear in your intentions\n');
+      return;
+    }
 
     var personPrompts = [{
       name: 'name',
@@ -99,17 +116,33 @@ module.exports = yeoman.Base.extend({
     }];
 
     var allPrompts = concat(personPrompts, prefPrompts, pkgPrompts);
-    var unsavedPrompts = getUnsavedPrompts(savedPrompts, allPrompts);
-    var promptsToAsk = shouldAskAll ? allPrompts : unsavedPrompts;
+    var promptsToAsk = getUnsavedPrompts(savedPrompts, allPrompts);
+
+    if (shouldAskAll) {
+      promptsToAsk = allPrompts;
+    }
+
+    if (shouldSkipAll) {
+      promptsToAsk = getUnsavedPrompts(savedPrompts, personPrompts);
+    }
+
     this.prompt(promptsToAsk, function (inputProps) {
       var props = R.merge(inputProps, savedPrompts);
 
+      if (shouldAskAll) {
+        props = inputProps;
+      }
+      if (shouldSkipAll) {
+        props = R.merge(inputProps, savedPrompts);
+        this.conflicter.force = true;
+      }
+
       var tpl = {
-        moduleName: props.moduleName,
+        moduleName: (props.moduleName || this.appname.replace(/\s/g, '-')),
         moduleDesc: props.moduleDesc,
         moduleKeywords: splitKeywords(props.moduleKeywords),
-        moduleVersion: props.moduleVersion,
-        moduleLicense: props.moduleLicense,
+        moduleVersion: (props.moduleVersion || '0.0.0'),
+        moduleLicense: (props.moduleLicense || 'MIT'),
         camelModuleName: camelize(props.moduleName),
         githubUsername: props.githubUsername,
         name: props.name,

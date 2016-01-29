@@ -55,25 +55,25 @@ module.exports = yeoman.Base.extend({
       validate: ifEmpty('You have to provide email'),
     }, {
       name: 'website',
-      message: '☯ website:',
+      message: '☯ your website:',
       store: true,
       validate: ifEmpty('You have to provide website'),
       filter: normalizeUrl,
     }, {
       name: 'githubUsername',
-      message: '☯ github username:',
+      message: '☯ your github username:',
       store: true,
       validate: ifEmpty('You have to provide a username'),
     }];
 
     var prefPrompts = [{
       name: 'moduleVersion',
-      message: '☯ version:',
+      message: '☯ preferred version to start:',
       store: true,
       default: '0.0.0',
     }, {
       name: 'moduleLicense',
-      message: '☯ license:',
+      message: '☯ preferred license:',
       store: true,
       default: 'MIT',
     }];

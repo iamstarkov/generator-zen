@@ -7,7 +7,7 @@ var humanizeUrl = require('humanize-url');
 var slugify = require('underscore.string').slugify;
 var camelize = require('underscore.string').camelize;
 var R = require('ramda');
-var boom = require('./boom');
+var cat = require('./cat');
 
 // ifEmpty :: String -> String -> true | String
 var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
@@ -59,7 +59,7 @@ module.exports = yeoman.Base.extend({
     var shouldSkipAll = this.options.force || this.options.yes;
 
     if (shouldAskAll && shouldSkipAll) {
-      this.log(boom);
+      this.log(cat);
       this.log('Congratulations! You just catch Schrödinger\'s yeoman cat.');
       this.log('You have chosen to ask both "all" and "minimum" questions.');
       this.log('');

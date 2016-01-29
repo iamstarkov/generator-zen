@@ -45,50 +45,50 @@ module.exports = yeoman.Base.extend({
 
     var personPrompts = [{
       name: 'name',
-      message: 'your name:',
+      message: '☯ your name:',
       store: true,
       validate: ifEmpty('You have to provide name'),
     }, {
       name: 'email',
-      message: 'your email:',
+      message: '☯ your email:',
       store: true,
       validate: ifEmpty('You have to provide email'),
     }, {
       name: 'website',
-      message: 'website:',
+      message: '☯ website:',
       store: true,
       validate: ifEmpty('You have to provide website'),
       filter: normalizeUrl,
     }, {
       name: 'githubUsername',
-      message: 'github username:',
+      message: '☯ github username:',
       store: true,
       validate: ifEmpty('You have to provide a username'),
     }];
 
     var prefPrompts = [{
       name: 'moduleVersion',
-      message: 'version:',
+      message: '☯ version:',
       store: true,
       default: '0.0.0',
     }, {
       name: 'moduleLicense',
-      message: 'license:',
+      message: '☯ license:',
       store: true,
       default: 'MIT',
     }];
 
     var pkgPrompts = [{
       name: 'moduleName',
-      message: 'name:',
+      message: '☯ name:',
       default: this.appname.replace(/\s/g, '-'),
       filter: slugify,
     }, {
       name: 'moduleDesc',
-      message: 'description:',
+      message: '☯ description:',
     }, {
       name: 'moduleKeywords',
-      message: 'keywords:',
+      message: '☯ keywords:',
     }];
 
     var allPrompts = concat(personPrompts, prefPrompts, pkgPrompts);

@@ -11,6 +11,9 @@ var R = require('ramda');
 // ifEmpty :: String -> String -> true | String
 var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
 
+// concat :: [Array*…] -> Array
+var concat = R.unapply(R.reduce(R.concat, []));
+
 // splitKeywords :: String -> [String]
 var splitKeywords = R.pipe(
   R.defaultTo(''),
@@ -25,9 +28,20 @@ var name = R.ifElse(R.is(String), R.identity, R.pipe(R.keys, R.head));
 // options :: String | Object -> Object
 var options = R.ifElse(R.is(String), R.always({}), R.pipe(R.values, R.head));
 
+// getUnsavedPrompts :: (Object, [Object]) -> Object
+var getUnsavedPrompts = function (savedPrompts, allPrompts) {
+  var savedKeys = R.keys(savedPrompts);
+  var allKeys = R.map(R.prop('name'), allPrompts);
+  var getPrompt = function (item) { return R.find(R.propEq('name', item), allPrompts); };
+  var diffKeys = R.difference(allKeys, savedKeys);
+  var resPrompts = R.map(getPrompt, diffKeys);
+  return resPrompts;
+};
+
 module.exports = yeoman.Base.extend({
   init: function () {
     var cb = this.async();
+    var savedPrompts = this._globalConfig.getAll().promptValues;
 
     var personPrompts = [{
       name: 'name',
@@ -51,10 +65,6 @@ module.exports = yeoman.Base.extend({
       store: true,
       validate: ifEmpty('You have to provide a username'),
     }];
-
-    var savedPrompts = this._globalConfig.getAll().promptValues;
-
-    console.log('savedPrompts',savedPrompts);
 
     var prefPrompts = [{
       name: 'moduleVersion',
@@ -81,23 +91,11 @@ module.exports = yeoman.Base.extend({
       message: 'keywords:',
     }];
 
-    var allPrompts = R.concat(
-      R.concat(personPrompts, prefPrompts),
-      pkgPrompts
-    )
+    var allPrompts = concat(personPrompts, prefPrompts, pkgPrompts);
 
-    var savedKeys = R.keys(savedPrompts);
-    var allKeys = R.map(R.prop('name'), allPrompts);
-    var diffKeys = R.difference(allKeys, savedKeys);
-    var getPrompt = item => R.find(R.propEq('name', item), allPrompts);
-    var resPrompts = R.map(getPrompt, diffKeys);
+    this.prompt(getUnsavedPrompts(savedPrompts, allPrompts), function (inputProps) {
+      var props = R.merge(inputProps, savedPrompts);
 
-    console.log('savedKeys', savedKeys);
-    console.log('allKeys', allKeys);
-
-    console.log('res', resPrompts);
-
-    this.prompt(resPrompts, function (props) {
       var tpl = {
         moduleName: props.moduleName,
         moduleDesc: props.moduleDesc,
@@ -109,7 +107,7 @@ module.exports = yeoman.Base.extend({
         name: props.name,
         email: props.email,
         website: props.website,
-        humanizedWebsite: humanizeUrl(props.website || ''),
+        humanizedWebsite: humanizeUrl(props.website),
       };
 
       var cpTpl = function (from, to) {

@@ -39,9 +39,16 @@ var getUnsavedPrompts = function (savedPrompts, allPrompts) {
 };
 
 module.exports = yeoman.Base.extend({
+  constructor: function () {
+    yeoman.Base.apply(this, arguments);
+    this.option('all', { type: Boolean, required: false, alias: 'a', defaults: false,
+      desc: 'Ask all questions',
+    });
+  },
   init: function () {
     var cb = this.async();
     var savedPrompts = this._globalConfig.getAll().promptValues;
+    var shouldAskAll = this.options.all || this.options.a;
 
     var personPrompts = [{
       name: 'name',
@@ -92,8 +99,9 @@ module.exports = yeoman.Base.extend({
     }];
 
     var allPrompts = concat(personPrompts, prefPrompts, pkgPrompts);
-
-    this.prompt(getUnsavedPrompts(savedPrompts, allPrompts), function (inputProps) {
+    var unsavedPrompts = getUnsavedPrompts(savedPrompts, allPrompts);
+    var promptsToAsk = shouldAskAll ? allPrompts : unsavedPrompts;
+    this.prompt(promptsToAsk, function (inputProps) {
       var props = R.merge(inputProps, savedPrompts);
 
       var tpl = {

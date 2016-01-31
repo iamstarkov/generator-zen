@@ -33,10 +33,9 @@ var options = R.ifElse(R.is(String), R.always({}), R.pipe(R.values, R.head));
 var getUnsavedPrompts = function (savedPrompts, allPrompts) {
   var savedKeys = R.keys(savedPrompts);
   var allKeys = R.map(R.prop('name'), allPrompts);
-  var getPrompt = function (item) { return R.find(R.propEq('name', item), allPrompts); };
+  var getPrompt = R.pipe(R.propEq('name'), R.find(R.__, allPrompts));
   var diffKeys = R.difference(allKeys, savedKeys);
-  var resPrompts = R.map(getPrompt, diffKeys);
-  return resPrompts;
+  return R.map(getPrompt, diffKeys);
 };
 
 module.exports = yeoman.Base.extend({
@@ -54,7 +53,7 @@ module.exports = yeoman.Base.extend({
   },
   init: function () {
     var cb = this.async();
-    var savedPrompts = this._globalConfig.getAll().promptValues;
+    var savedPrompts = this._globalConfig.getAll().promptValues || {};
     var shouldAskAll = this.options.all || this.options.a;
     var shouldSkipAll = this.options.force || this.options.yes;
 

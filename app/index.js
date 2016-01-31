@@ -1,5 +1,5 @@
 'use strict';
-/* eslint-disable func-names */
+/* eslint-disable func-names, vars-on-top */
 
 var yeoman = require('yeoman-generator');
 var normalizeUrl = require('normalize-url');
@@ -12,8 +12,8 @@ var cat = require('./cat');
 // ifEmpty :: String -> String -> true | String
 var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
 
-// concat :: [Array*…] -> Array
-var concat = R.unapply(R.reduce(R.concat, []));
+// concatAll :: [Array*…] -> Array
+var concatAll = R.unapply(R.flatten);
 
 // splitKeywords :: String -> [String]
 var splitKeywords = R.pipe(
@@ -114,7 +114,7 @@ module.exports = yeoman.Base.extend({
       message: '☯ keywords:',
     }];
 
-    var allPrompts = concat(personPrompts, prefPrompts, pkgPrompts);
+    var allPrompts = concatAll(personPrompts, prefPrompts, pkgPrompts);
     var promptsToAsk = getUnsavedPrompts(savedPrompts, allPrompts);
 
     if (shouldAskAll) {

@@ -7,6 +7,7 @@ var assert = require('yeoman-assert');
 
 it('generates expected files', function (done) {
   helpers.run(path.join(__dirname, './app'))
+    .withOptions({ skipInstall: true })
     .withPrompts({
       moduleName: 'module',
       githubUsername: 'username',

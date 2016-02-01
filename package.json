@@ -2,6 +2,9 @@
   "name": "generator-tiny-es-nm",
   "version": "1.1.9",
   "description": "Scaffold out a tiny ES6 node module",
+  "files": [
+    "app"
+  ],
   "scripts": {
     "test": "mocha -t 60000",
     "tdd": "npm test -- --watch",

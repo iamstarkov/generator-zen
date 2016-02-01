@@ -51,6 +51,9 @@ module.exports = yeoman.Base.extend({
     this.option('force', { type: Boolean, required: false, alias: 'f', defaults: false,
       desc: 'Ask minimum questions, like `$ npm init --force` ',
     });
+    this.option('commit', { type: String, required: false, alias: 'c',
+      desc: 'Commit message, optional',
+    });
   },
   init: function () {
     var cb = this.async();
@@ -171,7 +174,7 @@ module.exports = yeoman.Base.extend({
       { travis: { config: { after_script: ['npm run coveralls'] } } },
       { babel: { config: { plugins: ['add-module-exports'] } } },
       { 'eslint-init': { config: { extends: 'airbnb/base', plugins: ['require-path-exists'] } } },
-      'git-init',
+      { 'git-init': { commit: this.options.commit ? this.options.commit : '☯ init' } },
     ].forEach(function (input) {
       this.composeWith(
         name(input),

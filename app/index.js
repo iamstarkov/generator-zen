@@ -8,6 +8,7 @@ var slugify = require('underscore.string').slugify;
 var camelize = require('underscore.string').camelize;
 var R = require('ramda');
 var cat = require('./cat');
+var superb = require('superb');
 
 // ifEmpty :: String -> String -> true | String
 var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
@@ -138,7 +139,7 @@ module.exports = yeoman.Base.extend({
 
       var tpl = {
         moduleName: (props.moduleName || this.appname.replace(/\s/g, '-')),
-        moduleDesc: props.moduleDesc,
+        moduleDesc: shouldSkipAll ? 'My ' + superb() + ' module' : props.moduleDesc,
         moduleKeywords: splitKeywords(props.moduleKeywords),
         moduleVersion: (props.moduleVersion || '0.0.0'),
         moduleLicense: (props.moduleLicense || 'MIT'),

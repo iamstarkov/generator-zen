@@ -29,12 +29,17 @@
     cd awsm-project
 
     # run generator
-    yo tiny-es-nm
+    yo zen
 
-    # make initial commit
-    git add .
-    git commit -m 'init'
+    # all questions --all/-a
+    yo zen --all
 
+    # minimum questions --yes/-y or --force/-f, like `$ npm init --yes/--force`
+    yo zen --yes
+    yo zen --force
+
+    # help --help/-h
+    yo zen --help
 
 ### Next steps:
 

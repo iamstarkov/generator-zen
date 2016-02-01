@@ -175,7 +175,7 @@ module.exports = yeoman.Base.extend({
       this.composeWith(
         name(input),
         { options: R.merge(options(input), { 'skip-install': this.options['skip-install'] }) },
-        { local: require.resolve('generator-' + name(input) + '/generators/app') }
+        { local: require.resolve('generator-' + name(input)) }
       );
     }.bind(this));
   },

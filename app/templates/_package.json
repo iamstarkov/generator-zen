@@ -3,6 +3,9 @@
   "version": "<%= moduleVersion %>",
   "description": "<%= moduleDesc %>",
   "main": "index.es5.js",
+  "files": [
+    "index.es5.js"
+  ],
   "scripts": {
     "watch": "npm run transpile -- --watch",
     "coverage": "babel-node ./node_modules/.bin/isparta cover _mocha index.js -- --compilers js:babel-core/register",

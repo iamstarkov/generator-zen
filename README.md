@@ -1,4 +1,4 @@
-# generator-tiny-es-nm
+# generator-zen
 
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
@@ -20,7 +20,7 @@
 
 ## Install
 
-    npm install --global yo generator-tiny-es-nm
+    npm install --global yo generator-zen
 
 ## Usage
 
@@ -59,11 +59,11 @@ You are awesome! ✨💫
 
 MIT © [Vladimir Starkov](https://iamstarkov.com/)
 
-[npm-url]: https://npmjs.org/package/generator-tiny-es-nm
-[npm-image]: https://img.shields.io/npm/v/generator-tiny-es-nm.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/generator-zen
+[npm-image]: https://img.shields.io/npm/v/generator-zen.svg?style=flat-square
 
-[travis-url]: https://travis-ci.org/iamstarkov/generator-tiny-es-nm
-[travis-image]: https://img.shields.io/travis/iamstarkov/generator-tiny-es-nm.svg?style=flat-square
+[travis-url]: https://travis-ci.org/iamstarkov/generator-zen
+[travis-image]: https://img.shields.io/travis/iamstarkov/generator-zen.svg?style=flat-square
 
-[depstat-url]: https://david-dm.org/iamstarkov/generator-tiny-es-nm
-[depstat-image]: https://david-dm.org/iamstarkov/generator-tiny-es-nm.svg?style=flat-square
+[depstat-url]: https://david-dm.org/iamstarkov/generator-zen
+[depstat-image]: https://david-dm.org/iamstarkov/generator-zen.svg?style=flat-square

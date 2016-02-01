@@ -1,5 +1,5 @@
 {
-  "name": "generator-tiny-es-nm",
+  "name": "generator-zen",
   "version": "1.1.9",
   "description": "Scaffold out a tiny ES6 node module",
   "files": [
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamstarkov/generator-tiny-es-nm.git"
+    "url": "git+https://github.com/iamstarkov/generator-zen.git"
   },
   "keywords": [
     "yeoman-generator",
@@ -30,9 +30,9 @@
   "author": "Vladimir Starkov <iamstarkov@gmail.com> (https://iamstarkov.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iamstarkov/generator-tiny-es-nm/issues"
+    "url": "https://github.com/iamstarkov/generator-zen/issues"
   },
-  "homepage": "https://github.com/iamstarkov/generator-tiny-es-nm#readme",
+  "homepage": "https://github.com/iamstarkov/generator-zen#readme",
   "devDependencies": {
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^4.0.0",

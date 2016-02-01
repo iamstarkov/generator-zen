@@ -4,7 +4,7 @@
 [![Build Status][travis-image]][travis-url]
 [![Dependency Status][depstat-image]][depstat-url]
 
-> Scaffold out a tiny ES6 node module
+> Scaffold out a ES6 node module in zen way
 
 * `npm init` compliant
 * ES6 workflow

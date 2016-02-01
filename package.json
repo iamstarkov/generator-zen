@@ -1,7 +1,7 @@
 {
   "name": "generator-zen",
   "version": "1.1.9",
-  "description": "Scaffold out a tiny ES6 node module",
+  "description": "Scaffold out a ES6 node module in zen way",
   "files": [
     "app"
   ],

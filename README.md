@@ -36,6 +36,9 @@
     yo zen --yes
     yo zen --force
 
+    # custom init commit mesage --commit/-c, default '☯ init'
+    yo zen --commit='awsm init'
+
     # help --help/-h
     yo zen --help
 

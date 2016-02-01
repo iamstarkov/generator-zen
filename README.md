@@ -16,8 +16,6 @@
 [tdd]: https://iamstarkov.com/start-with-testing/
 [badges]: https://img.shields.io/badge/with-badges-brightgreen.svg?style=flat-square
 
-![soylent example](http://i.imgur.com/1akKK4Q.png)
-
 ## Install
 
     npm install --global yo generator-zen

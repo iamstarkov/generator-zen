@@ -9,6 +9,7 @@ var camelize = require('underscore.string').camelize;
 var R = require('ramda');
 var cat = require('./cat');
 var superb = require('superb');
+var mkdirp = require('mkdirp');
 
 // ifEmpty :: String -> String -> true | String
 var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
@@ -42,6 +43,13 @@ var getUnsavedPrompts = function (savedPrompts, allPrompts) {
 module.exports = yeoman.Base.extend({
   constructor: function () {
     yeoman.Base.apply(this, arguments);
+    this.argument('name', { type: String, required: false,
+      desc: ([
+        'Node module’s name: "$ yo zen pify";',
+        'node module will be initialized in created folder',
+        'and you will be redicted to that folder',
+      ].join('\n\t') + '\n    '),
+    });
     this.option('all', { type: Boolean, required: false, alias: 'a', defaults: false,
       desc: 'Ask all questions',
     });
@@ -60,6 +68,11 @@ module.exports = yeoman.Base.extend({
     var savedPrompts = this._globalConfig.getAll().promptValues || {};
     var shouldAskAll = this.options.all || this.options.a;
     var shouldSkipAll = this.options.force || this.options.yes;
+
+    if (hasArgName()) {
+      mkdirp(this.name);
+      this.destinationRoot(this.destinationPath(this.name));
+    }
 
     if (shouldAskAll && shouldSkipAll) {
       this.log(cat);

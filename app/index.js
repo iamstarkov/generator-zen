@@ -76,10 +76,6 @@ module.exports = yeoman.Base.extend({
 
     if (shouldAskAll && shouldSkipAll) {
       this.log(cat);
-      this.log('Congratulations! You just catched Schrödinger\'s cat.');
-      this.log('You have chosen to ask both "all" and "minimum" questions.');
-      this.log('P.S. Please be clear in your intentions\n');
-      this.log('Sincerely yours, \nSchrödinger\'s cat.\n');
       return;
     }
 

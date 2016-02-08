@@ -29,6 +29,9 @@
     # run generator
     yo zen
 
+    # run generator to create project in separate folder
+    yo zen meow
+
     # all questions --all/-a
     yo zen --all
 

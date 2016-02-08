@@ -16,4 +16,8 @@ module.exports = [
   '  "---...___            |            ___...---"',
   '            """---...__ | __...---"""',
   '                        "',
+  'Congratulations! You just catched Schrödinger\'s cat.',
+  'You have chosen to ask both "all" and "minimum" questions.',
+  'P.S. Please be clear in your intentions\n',
+  'Sincerely yours, \nSchrödinger\'s cat.\n',
 ].join('\n');

@@ -9,6 +9,7 @@ var camelize = require('underscore.string').camelize;
 var R = require('ramda');
 var cat = require('./cat');
 var superb = require('superb');
+var mkdirp = require('mkdirp');
 
 // ifEmpty :: String -> String -> true | String
 var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
@@ -42,6 +43,13 @@ var getUnsavedPrompts = function (savedPrompts, allPrompts) {
 module.exports = yeoman.Base.extend({
   constructor: function () {
     yeoman.Base.apply(this, arguments);
+    this.argument('name', { type: String, required: false,
+      desc: ([
+        'Node module’s name: "$ yo zen pify";',
+        'node module will be initialized in created folder',
+        'and you will be redicted to that folder',
+      ].join('\n\t') + '\n    '),
+    });
     this.option('all', { type: Boolean, required: false, alias: 'a', defaults: false,
       desc: 'Ask all questions',
     });
@@ -57,16 +65,18 @@ module.exports = yeoman.Base.extend({
   },
   init: function () {
     var cb = this.async();
+    var firstTime = !this._globalConfig.getAll().promptValues;
     var savedPrompts = this._globalConfig.getAll().promptValues || {};
     var shouldAskAll = this.options.all || this.options.a;
     var shouldSkipAll = this.options.force || this.options.yes;
 
+    if (this.name) {
+      mkdirp(this.name);
+      this.destinationRoot(this.destinationPath(this.name));
+    }
+
     if (shouldAskAll && shouldSkipAll) {
       this.log(cat);
-      this.log('Congratulations! You just catched Schrödinger\'s cat.');
-      this.log('You have chosen to ask both "all" and "minimum" questions.');
-      this.log('P.S. Please be clear in your intentions\n');
-      this.log('Sincerely yours, \nSchrödinger\'s cat.\n');
       return;
     }
 
@@ -93,7 +103,7 @@ module.exports = yeoman.Base.extend({
       validate: ifEmpty('You have to provide a username'),
     }];
 
-    var prefPrompts = [{
+    var prefPrompts = (!firstTime && !shouldAskAll) ? [] : [{
       name: 'moduleVersion',
       message: '☯ preferred version to start:',
       store: true,
@@ -105,18 +115,22 @@ module.exports = yeoman.Base.extend({
       default: 'MIT',
     }];
 
-    var pkgPrompts = [{
+    var pkgNamePrompts = [{
       name: 'moduleName',
       message: '☯ name:',
       default: this.appname.replace(/\s/g, '-'),
       filter: slugify,
-    }, {
+    }];
+
+    var pkgPrompts = [{
       name: 'moduleDesc',
       message: '☯ description:',
     }, {
       name: 'moduleKeywords',
       message: '☯ keywords:',
     }];
+
+    pkgPrompts = this.name ? pkgPrompts : R.concat(pkgNamePrompts, pkgPrompts);
 
     var allPrompts = concatAll(personPrompts, prefPrompts, pkgPrompts);
     var promptsToAsk = getUnsavedPrompts(savedPrompts, allPrompts);
@@ -140,13 +154,15 @@ module.exports = yeoman.Base.extend({
         this.conflicter.force = true;
       }
 
+      var moduleName = (props.moduleName || (this.name ? this.name : this.appname.replace(/\s/g, '-')));
+
       var tpl = {
-        moduleName: (props.moduleName || this.appname.replace(/\s/g, '-')),
+        moduleName: moduleName,
         moduleDesc: shouldSkipAll ? 'My ' + superb() + ' module' : props.moduleDesc,
         moduleKeywords: splitKeywords(props.moduleKeywords),
         moduleVersion: (props.moduleVersion || '0.0.0'),
         moduleLicense: (props.moduleLicense || 'MIT'),
-        camelModuleName: camelize(props.moduleName),
+        camelModuleName: camelize(moduleName),
         githubUsername: props.githubUsername,
         name: props.name,
         email: props.email,
@@ -185,5 +201,10 @@ module.exports = yeoman.Base.extend({
   },
   install: function () {
     this.npmInstall();
+  },
+  end: function () {
+    if (this.name) {
+      // @TODO change dir to newly created project
+    }
   },
 });

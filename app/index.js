@@ -103,7 +103,7 @@ module.exports = yeoman.Base.extend({
       validate: ifEmpty('You have to provide a username'),
     }];
 
-    var prefPrompts = (!firstTime) ? [] : [{
+    var prefPrompts = (!firstTime && !shouldAskAll) ? [] : [{
       name: 'moduleVersion',
       message: '☯ preferred version to start:',
       store: true,

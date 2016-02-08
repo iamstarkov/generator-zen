@@ -22,28 +22,27 @@
 
 ## Usage
 
-    # create folder for your project
-    mkdir awsm-project
-    cd awsm-project
+Initially `zen` asks all questions, but its only first time.  
+`zen` doesn't bother you with questions about your and your preferences twice.  
+`zen` asks necessary questions about your project (name, description and keywords).
 
-    # run generator
     yo zen
 
-    # run generator to create project in separate folder
+`zen` even creates folder for you, just give a name as an argument
+
     yo zen meow
 
-    # all questions --all/-a
-    yo zen --all
+Efficient `zen` asks zero questions with `--yes/-y` flags:
 
-    # minimum questions --yes/-y or --force/-f, like `$ npm init --yes/--force`
-    yo zen --yes
-    yo zen --force
+    yo zen meow -y
 
-    # custom init commit mesage --commit/-c, default '☯ init'
-    yo zen --commit='awsm init'
+Although, zen can ask `--all/a` questions. Useful if you need to change previous answers:
 
-    # help --help/-h
-    yo zen --help
+    yo zen -a
+
+Ask about help you forgot something:
+
+    yo zen -h
 
 ### Next steps:
 

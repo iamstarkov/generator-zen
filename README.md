@@ -49,9 +49,7 @@
 
 1. Push it to your github repo
 2. Enable your project on travis: https://travis-ci.org/profile/
-  ![travis](http://i.imgur.com/mN4EvhC.png)
 3. Enable your project on coveralls: https://coveralls.io/repos/new
-  ![coveralls](http://i.imgur.com/ApfXMLl.png)
 4. Write some tests in tests.js
 5. Run tdd mode: `npm run tdd`
 6. Write your module to pass the tests

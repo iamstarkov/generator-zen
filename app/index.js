@@ -114,18 +114,23 @@ module.exports = yeoman.Base.extend({
       default: 'MIT',
     }];
 
-    var pkgPrompts = [{
+
+    var pkgNamePrompts = [{
       name: 'moduleName',
       message: '☯ name:',
       default: this.appname.replace(/\s/g, '-'),
       filter: slugify,
-    }, {
+    }];
+
+    var pkgPrompts = [{
       name: 'moduleDesc',
       message: '☯ description:',
     }, {
       name: 'moduleKeywords',
       message: '☯ keywords:',
     }];
+
+    pkgPrompts = this.name ? pkgPrompts : R.concat(pkgNamePrompts, pkgPrompts);
 
     var allPrompts = concatAll(personPrompts, prefPrompts, pkgPrompts);
     var promptsToAsk = getUnsavedPrompts(savedPrompts, allPrompts);
@@ -149,13 +154,15 @@ module.exports = yeoman.Base.extend({
         this.conflicter.force = true;
       }
 
+      var moduleName = (props.moduleName || (this.name ? this.name : this.appname.replace(/\s/g, '-')));
+
       var tpl = {
-        moduleName: (props.moduleName || this.appname.replace(/\s/g, '-')),
+        moduleName: moduleName,
         moduleDesc: shouldSkipAll ? 'My ' + superb() + ' module' : props.moduleDesc,
         moduleKeywords: splitKeywords(props.moduleKeywords),
         moduleVersion: (props.moduleVersion || '0.0.0'),
         moduleLicense: (props.moduleLicense || 'MIT'),
-        camelModuleName: camelize(props.moduleName),
+        camelModuleName: camelize(moduleName),
         githubUsername: props.githubUsername,
         name: props.name,
         email: props.email,

@@ -29,6 +29,9 @@
     # run generator
     yo zen
 
+    # run generator to create project in separate folder
+    yo zen meow
+
     # all questions --all/-a
     yo zen --all
 
@@ -38,6 +41,7 @@
 
     # custom init commit mesage --commit/-c, default '☯ init'
     yo zen --commit='awsm init'
+
 
     # help --help/-h
     yo zen --help

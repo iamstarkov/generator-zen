@@ -69,7 +69,7 @@ module.exports = yeoman.Base.extend({
     var shouldAskAll = this.options.all || this.options.a;
     var shouldSkipAll = this.options.force || this.options.yes;
 
-    if (hasArgName()) {
+    if (this.name) {
       mkdirp(this.name);
       this.destinationRoot(this.destinationPath(this.name));
     }

@@ -65,6 +65,7 @@ module.exports = yeoman.Base.extend({
   },
   init: function () {
     var cb = this.async();
+    var firstTime = !this._globalConfig.getAll().promptValues;
     var savedPrompts = this._globalConfig.getAll().promptValues || {};
     var shouldAskAll = this.options.all || this.options.a;
     var shouldSkipAll = this.options.force || this.options.yes;
@@ -102,7 +103,7 @@ module.exports = yeoman.Base.extend({
       validate: ifEmpty('You have to provide a username'),
     }];
 
-    var prefPrompts = [{
+    var prefPrompts = (!firstTime) ? [] : [{
       name: 'moduleVersion',
       message: '☯ preferred version to start:',
       store: true,
@@ -113,7 +114,6 @@ module.exports = yeoman.Base.extend({
       store: true,
       default: 'MIT',
     }];
-
 
     var pkgNamePrompts = [{
       name: 'moduleName',

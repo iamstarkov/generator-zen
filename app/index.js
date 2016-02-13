@@ -202,9 +202,4 @@ module.exports = yeoman.Base.extend({
   install: function () {
     this.npmInstall();
   },
-  end: function () {
-    if (this.name) {
-      // @TODO change dir to newly created project
-    }
-  },
 });

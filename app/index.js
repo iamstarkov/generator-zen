@@ -190,7 +190,7 @@ module.exports = yeoman.Base.extend({
       { travis: { config: { after_script: ['npm run coveralls'] } } },
       { babel: { config: { plugins: ['add-module-exports'] } } },
       { 'eslint-init': { config: { extends: 'airbnb/base', plugins: ['require-path-exists'] } } },
-      { 'git-init': { commit: this.options.commit ? this.options.commit : '☯ init' } },
+      { 'git-init': { commit: this.options.commit ? this.options.commit : '☯ zen init' } },
     ].forEach(function (input) {
       this.composeWith(
         name(input),

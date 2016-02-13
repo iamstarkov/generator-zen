@@ -2,18 +2,16 @@
 /* eslint-disable func-names, vars-on-top */
 
 var yeoman = require('yeoman-generator');
-var normalizeUrl = require('normalize-url');
 var humanizeUrl = require('humanize-url');
-var slugify = require('underscore.string').slugify;
 var camelize = require('underscore.string').camelize;
 var R = require('ramda');
 var cat = require('./cat');
 var superb = require('superb');
 var mkdirp = require('mkdirp');
 var spawnSync = require('spawn-sync');
-
-// ifEmpty :: String -> String -> true | String
-var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
+var getPersonPrompts = require('./person-prompts');
+var getPrefPropmts = require('./pref-prompts');
+var getPkgPrompts = require('./pkg-prompts');
 
 // concatAll :: [Array*…] -> Array
 var concatAll = R.unapply(R.flatten);
@@ -64,105 +62,65 @@ module.exports = yeoman.Base.extend({
       desc: 'Commit message, optional',
     });
   },
-  init: function () {
-    var cb = this.async();
-    var firstTime = !this._globalConfig.getAll().promptValues;
-    var savedPrompts = this._globalConfig.getAll().promptValues || {};
-    var shouldAskAll = this.options.all || this.options.a;
-    var shouldSkipAll = this.options.force || this.options.yes;
+  initializing: function () {
+    this.firstTime = !this._globalConfig.getAll().promptValues;
+    this.savedPrompts = this._globalConfig.getAll().promptValues || {};
+    this.shouldAskAll = this.options.all || this.options.a;
+    this.shouldSkipAll = this.options.force || this.options.yes;
 
     if (this.name) {
       mkdirp(this.name);
       this.destinationRoot(this.destinationPath(this.name));
     }
 
-    if (shouldAskAll && shouldSkipAll) {
+    if (this.shouldAskAll && this.shouldSkipAll) {
       this.log(cat);
       return;
     }
+  },
+  prompting: function () {
+    var cb = this.async();
+    var personPrompts = getPersonPrompts();
+    var prefPrompts = (!this.firstTime && !this.shouldAskAll) ? [] : getPrefPropmts();
+    var pkgPrompts = getPkgPrompts(this.appname);
 
-    var personPrompts = [{
-      name: 'name',
-      message: '☯ your name:',
-      store: true,
-      validate: ifEmpty('You have to provide name'),
-    }, {
-      name: 'email',
-      message: '☯ your email:',
-      store: true,
-      validate: ifEmpty('You have to provide email'),
-    }, {
-      name: 'website',
-      message: '☯ your website:',
-      store: true,
-      validate: ifEmpty('You have to provide website'),
-      filter: normalizeUrl,
-    }, {
-      name: 'githubUsername',
-      message: '☯ your github username:',
-      store: true,
-      validate: ifEmpty('You have to provide a username'),
-    }];
-
-    var prefPrompts = (!firstTime && !shouldAskAll) ? [] : [{
-      name: 'moduleVersion',
-      message: '☯ preferred version to start:',
-      store: true,
-      default: '0.0.0',
-    }, {
-      name: 'moduleLicense',
-      message: '☯ preferred license:',
-      store: true,
-      default: 'MIT',
-    }];
-
-    var pkgNamePrompts = [{
-      name: 'moduleName',
-      message: '☯ name:',
-      default: this.appname.replace(/\s/g, '-'),
-      filter: slugify,
-    }];
-
-    var pkgPrompts = [{
-      name: 'moduleDesc',
-      message: '☯ description:',
-    }, {
-      name: 'moduleKeywords',
-      message: '☯ keywords:',
-    }];
-
-    pkgPrompts = this.name ? pkgPrompts : R.concat(pkgNamePrompts, pkgPrompts);
+    if (this.name) {
+      pkgPrompts = R.filter(R.pipe(R.propEq('name', 'moduleName'), R.not), pkgPrompts);
+    }
 
     var allPrompts = concatAll(personPrompts, prefPrompts, pkgPrompts);
-    var promptsToAsk = getUnsavedPrompts(savedPrompts, allPrompts);
+    var promptsToAsk = getUnsavedPrompts(this.savedPrompts, allPrompts);
 
-    if (shouldAskAll) {
+    if (this.shouldAskAll) {
       promptsToAsk = allPrompts;
     }
 
-    if (shouldSkipAll) {
-      promptsToAsk = getUnsavedPrompts(savedPrompts, personPrompts);
+    if (this.shouldSkipAll) {
+      promptsToAsk = getUnsavedPrompts(this.savedPrompts, personPrompts);
     }
 
     this.prompt(promptsToAsk, function (inputProps) {
-      var props = R.merge(inputProps, savedPrompts);
+      var props = R.merge(inputProps, this.savedPrompts);
 
-      if (shouldAskAll) {
+      if (this.shouldAskAll) {
         props = inputProps;
       }
-      if (shouldSkipAll) {
-        props = R.merge(inputProps, savedPrompts);
+      if (this.shouldSkipAll) {
+        props = R.merge(inputProps, this.savedPrompts);
         this.conflicter.force = true;
       }
 
-      var moduleName = (props.moduleName || (this.name ? this.name : this.appname.replace(/\s/g, '-')));
+      var moduleName = props.moduleName;
+      if (!moduleName) {
+        moduleName = this.name ? this.name : this.appname.replace(/\s/g, '-');
+      }
 
       var tpl = {
         moduleName: moduleName,
-        moduleDesc: shouldSkipAll ? 'My ' + superb() + ' module' : props.moduleDesc,
+        moduleDesc: this.shouldSkipAll ? 'My ' + superb() + ' module' : props.moduleDesc,
         moduleKeywords: splitKeywords(props.moduleKeywords),
-        moduleVersion: (props.moduleVersion || '0.0.0'),
-        moduleLicense: (props.moduleLicense || 'MIT'),
+        moduleVersion: (props.moduleVersion || getPrefPropmts()[0].default),
+        moduleLicense: (props.moduleLicense || getPrefPropmts()[1].default),
         camelModuleName: camelize(moduleName),
         githubUsername: props.githubUsername,
         name: props.name,
@@ -187,8 +145,9 @@ module.exports = yeoman.Base.extend({
     }.bind(this));
   },
   writing: function () {
-    var commits = spawnSync('git', ['log', '--oneline']).stdout.toString().split('\n').filter(Boolean);
-    var commitMessage = (commits.length === 0) ? '☯ zen init' : '☯ zen update';
+    var commitsRaw = spawnSync('git', ['log', '--oneline']).stdout.toString();
+    var commits = commitsRaw.split('\n').filter(Boolean);
+    var commitMessage = '☯ zen ' + (R.isEmpty(commits) ? 'init' : 'update');
 
     [
       { travis: { config: { after_script: ['npm run coveralls'] } } },

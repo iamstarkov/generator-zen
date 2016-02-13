@@ -10,6 +10,7 @@ var R = require('ramda');
 var cat = require('./cat');
 var superb = require('superb');
 var mkdirp = require('mkdirp');
+var spawnSync = require('spawn-sync');
 
 // ifEmpty :: String -> String -> true | String
 var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
@@ -186,11 +187,14 @@ module.exports = yeoman.Base.extend({
     }.bind(this));
   },
   writing: function () {
+    var commits = spawnSync('git', ['log', '--oneline']).stdout.toString().split('\n').filter(Boolean);
+    var commitMessage = (commits.length === 0) ? '☯ zen init' : '☯ zen update';
+
     [
       { travis: { config: { after_script: ['npm run coveralls'] } } },
       { babel: { config: { plugins: ['add-module-exports'] } } },
       { 'eslint-init': { config: { extends: 'airbnb/base', plugins: ['require-path-exists'] } } },
-      { 'git-init': { commit: this.options.commit ? this.options.commit : '☯ zen init' } },
+      { 'git-init': { commit: this.options.commit ? this.options.commit : commitMessage } },
     ].forEach(function (input) {
       this.composeWith(
         name(input),

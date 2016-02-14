@@ -36,7 +36,7 @@ Efficient `zen` asks zero questions with `--yes/-y` flags:
 
     yo zen meow -y
 
-Although, `zen` can ask `--all/a` questions. Useful if you need to change previous answers:
+Although, `zen` can ask `--all/-a` questions. Useful if you need to change previous answers:
 
     yo zen -a
 

@@ -139,7 +139,6 @@ module.exports = yeoman.Base.extend({
       cpTpl('_test.js', 'test.js');
       cpTpl('editorconfig', '.editorconfig');
       cpTpl('gitignore', '.gitignore');
-      cpTpl('npmignore', '.npmignore');
 
       cb();
     }.bind(this));

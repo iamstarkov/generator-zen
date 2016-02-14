@@ -18,7 +18,6 @@ it('generates expected files', function (done) {
       assert.file([
         '.editorconfig',
         '.gitignore',
-        '.npmignore',
         '.travis.yml',
         '.babelrc',
         'package.json',

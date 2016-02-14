@@ -40,9 +40,16 @@ Although, `zen` can ask `--all/a` questions. Useful if you need to change previo
 
     yo zen -a
 
+`zen` can be `--performant/-p` with help of [pnpm][pnpm], just `npm i -g pnpm` once before. Several times faster than `npm install`:
+
+    yo zen -p
+
 Ask about help you forgot something:
 
     yo zen -h
+
+
+[pnpm]: https://github.com/rstacruz/pnpm
 
 ### Next steps:
 

@@ -61,6 +61,9 @@ module.exports = yeoman.Base.extend({
     this.option('commit', { type: String, required: false, alias: 'c',
       desc: 'Commit message, optional',
     });
+    this.option('perfomant', { type: Boolean, required: false, alias: 'p',
+      desc: 'Perfomant install, global `pnpm` required https://github.com/rstacruz/pnpm',
+    });
   },
   initializing: function () {
     this.firstTime = !this._globalConfig.getAll().promptValues;
@@ -156,12 +159,18 @@ module.exports = yeoman.Base.extend({
     ].forEach(function (input) {
       this.composeWith(
         name(input),
-        { options: R.merge(options(input), { 'skip-install': this.options['skip-install'] }) },
+        { options: R.merge(options(input), { 'skip-install': this.options.perfomant ? true : this.options['skip-install'] }) },
         { local: require.resolve('generator-' + name(input)) }
       );
     }.bind(this));
   },
   install: function () {
-    this.npmInstall();
+    if (!this.options['skip-install']) {
+      if (this.options.perfomant) {
+        this.spawnCommandSync('pnpm', ['install']);
+      } else {
+        this.npmInstall();
+      }
+    }
   },
 });

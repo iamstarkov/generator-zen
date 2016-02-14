@@ -23,7 +23,7 @@
 ## Usage
 
 Initially `zen` asks all questions, but its only first time.  
-`zen` doesn't bother you with questions about your and your preferences twice.  
+`zen` doesn't bother you with questions about you and your preferences twice.  
 `zen` asks necessary questions about your project (name, description and keywords).
 
     yo zen

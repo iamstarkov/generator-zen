@@ -39,8 +39,8 @@ Try speed up installing dependencies try `--perfomant/-p` option, it uses `pnpm`
 
     Arguments:
       name  # Node module’s name: "$ yo zen pify";
-    	node module will be initialized in created folder
-    	and you will be redirected to that folder
+            node module will be initialized in created folder
+            and you will be redirected to that folder
           Type: String  Required: false
 
 [pnpm]: https://github.com/rstacruz/pnpm

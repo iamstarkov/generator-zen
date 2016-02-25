@@ -46,7 +46,7 @@ module.exports = yeoman.Base.extend({
       desc: ([
         'Node module’s name: "$ yo zen pify";',
         'node module will be initialized in created folder',
-        'and you will be redicted to that folder',
+        'and you will be redirected to that folder',
       ].join('\n\t') + '\n    '),
     });
     this.option('all', { type: Boolean, required: false, alias: 'a', defaults: false,

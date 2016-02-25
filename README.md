@@ -20,7 +20,7 @@ Afterwards `zen` asks questions about each module in particular.
 
 Also you can can `--skip/-s` all questions or force `zen` to ask `--all/-a` questions.
 
-Try speed up installing dependencies try `--perfomant/-p` option, it uses `pnpm`, so ensure you have pnpm installed globally (`$ npm i -g pnpm`).
+Speed up dependencies installing with `--perfomant/-p` option, it uses `pnpm`, so ensure you have pnpm installed globally (`$ npm i -g pnpm`).
 
     $ yo zen -h
     Usage:

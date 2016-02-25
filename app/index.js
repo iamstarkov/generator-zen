@@ -52,24 +52,27 @@ module.exports = yeoman.Base.extend({
     this.option('all', { type: Boolean, required: false, alias: 'a', defaults: false,
       desc: 'Ask all questions',
     });
+    this.option('skip', { type: Boolean, required: false, alias: 's', defaults: false,
+      desc: 'Ask minimum questions, like `$ npm init --yes/--force` ',
+    });
     this.option('yes', { type: Boolean, required: false, alias: 'y', defaults: false,
-      desc: 'Ask minimum questions, like `$ npm init --yes` ',
+      desc: 'Same as `--skip`',
     });
     this.option('force', { type: Boolean, required: false, alias: 'f', defaults: false,
-      desc: 'Ask minimum questions, like `$ npm init --force` ',
+      desc: 'Same as `--skip`',
     });
     this.option('commit', { type: String, required: false, alias: 'c',
       desc: 'Commit message, optional',
     });
     this.option('perfomant', { type: Boolean, required: false, alias: 'p',
-      desc: 'Perfomant install, global `pnpm` required https://github.com/rstacruz/pnpm',
+      desc: 'Perfomant install, ensure you have pnpm installed globally (`$ npm i -g pnpm`)',
     });
   },
   initializing: function () {
     this.firstTime = !this._globalConfig.getAll().promptValues;
     this.savedPrompts = this._globalConfig.getAll().promptValues || {};
     this.shouldAskAll = this.options.all || this.options.a;
-    this.shouldSkipAll = this.options.force || this.options.yes;
+    this.shouldSkipAll = this.options.skip || this.options.force || this.options.yes;
 
     if (this.name) {
       mkdirp(this.name);

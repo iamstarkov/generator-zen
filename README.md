@@ -22,32 +22,36 @@
 
 ## Usage
 
-Initially `zen` asks all questions, but its only first time.  
-`zen` doesn't bother you with questions about you and your preferences twice.  
-`zen` asks necessary questions about your project (name, description and keywords).
-
     yo zen
 
-`zen` even creates folder for you, just give a name as an argument
+_I designed `zen` to ask only essential questions_, so questions about
+you and and your preferences are remembered by zen on initial run.
+Afterwards `zen` asks questions about each module in particular.
 
-    yo zen meow
+Also you can can `--skip/-s` all questions or force `zen` to ask `--all/-a` questions.
 
-Efficient `zen` asks zero questions with `--yes/-y` flags:
+Try speed up installing dependencies try `--perfomant/-p` option, it uses `pnpm`, so ensure you have pnpm installed globally (`$ npm i -g pnpm`).
 
-    yo zen meow -y
+    $ yo zen -h
+    Usage:
+      yo zen [<name>] [options]
 
-Although, `zen` can ask `--all/-a` questions. Useful if you need to change previous answers:
+    Options:
+      -h,   --help          # Print the generator's options and usage
+            --skip-cache    # Do not remember prompt answers                                                                     Default: false
+            --skip-install  # Do not automatically install dependencies                                                          Default: false
+      -a,   --all           # Ask all questions                                                                                  Default: false
+      -s,   --skip          # Ask minimum questions, like `$ npm init --yes/--force`                                             Default: false
+      -y,   --yes           # Same as `--skip`                                                                                   Default: false
+      -f,   --force         # Same as `--skip`                                                                                   Default: false
+      -c,   --commit        # Commit message, optional
+      -p,   --perfomant     # Perfomant install, so ensure you have pnpm installed globally (`$ npm i -g pnpm`)
 
-    yo zen -a
-
-`zen` can be `--performant/-p` with help of [pnpm][pnpm], just `npm i -g pnpm` once before. Several times faster than `npm install`:
-
-    yo zen -p
-
-Ask about help you forgot something:
-
-    yo zen -h
-
+    Arguments:
+      name  # Node module’s name: "$ yo zen pify";
+    	node module will be initialized in created folder
+    	and you will be redirected to that folder
+          Type: String  Required: false
 
 [pnpm]: https://github.com/rstacruz/pnpm
 

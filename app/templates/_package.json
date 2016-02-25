@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "watch": "npm run transpile -- --watch",
-    "coverage": "babel-node ./node_modules/.bin/isparta cover _mocha index.js -- --compilers js:babel-core/register",
+    "coverage": "nyc -r=text -r=lcov npm test", 
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
     "test": "mocha --require babel-core/register",
@@ -39,6 +39,7 @@
     "isparta": "*",
     "mocha": "*",
     "npm-run-all": "*",
+    "nyc": "^5.6.0",
     "rimraf": "*"
   }
 }

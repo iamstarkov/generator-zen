@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "generator-babel": "^1.0.4",
-    "generator-eslint-init": "^0.1.1",
+    "generator-eslint-init": "^1.0.0",
     "generator-git-init": "^1.1.0",
     "generator-travis": "^1.2.3",
     "humanize-url": "^1.0.1",

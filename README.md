@@ -9,7 +9,7 @@
 * `npm init` compliant
 * ES6 workflow
 * Structured and trustworthy README
-* Tests, tdd and test coverage
+* [Tests, tdd][tdd] and test coverage
 * [Ready to use with travis and coveralls](#next-steps)
 * ![Badges][badges]
 

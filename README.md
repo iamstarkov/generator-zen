@@ -34,7 +34,7 @@ Try speed up installing dependencies try `--perfomant/-p` option, it uses `pnpm`
       -s,   --skip          # Ask minimum questions, like `$ npm init --yes/--force`                                             Default: false
       -y,   --yes           # Same as `--skip`                                                                                   Default: false
       -f,   --force         # Same as `--skip`                                                                                   Default: false
-      -c,   --commit        # Commit message, optional
+      -c,   --commit        # Commit message
       -p,   --perfomant     # Perfomant install, so ensure you have pnpm installed globally (`$ npm i -g pnpm`)
 
     Arguments:

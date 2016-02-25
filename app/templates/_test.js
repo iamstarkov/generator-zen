@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 import { equal } from 'assert';
 import <%= camelModuleName %> from './index';
 

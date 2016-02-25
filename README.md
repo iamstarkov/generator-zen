@@ -6,16 +6,6 @@
 
 > ☯ zen node module scaffolder
 
-* `npm init` compliant
-* ES6 workflow
-* Structured and trustworthy README
-* [Tests, tdd][tdd] and test coverage
-* [Ready to use with travis and coveralls](#next-steps)
-* ![Badges][badges]
-
-[tdd]: https://iamstarkov.com/start-with-testing/
-[badges]: https://img.shields.io/badge/with-badges-brightgreen.svg?style=flat-square
-
 ## Install
 
     npm install --global yo generator-zen
@@ -55,7 +45,7 @@ Try speed up installing dependencies try `--perfomant/-p` option, it uses `pnpm`
 
 [pnpm]: https://github.com/rstacruz/pnpm
 
-### Next steps:
+## Next steps:
 
 1. Push it to your github repo
 2. Enable your project on travis: https://travis-ci.org/profile/

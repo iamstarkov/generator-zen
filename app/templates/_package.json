@@ -36,7 +36,6 @@
   "devDependencies": {
     "assert": "*",
     "coveralls": "*",
-    "isparta": "*",
     "mocha": "*",
     "npm-run-all": "*",
     "nyc": "^5.6.0",

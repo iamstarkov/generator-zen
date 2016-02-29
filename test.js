@@ -13,6 +13,7 @@ it('generates expected files', function (done) {
       githubUsername: 'username',
       website: 'test.com',
       moduleDesc: 'Your awsm module!',
+      moduleTest: 'tape',
     })
     .on('end', function () {
       assert.file([

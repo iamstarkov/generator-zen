@@ -9,6 +9,13 @@ function getPrefPropmts() {
     message: '☯ preferred license:',
     store: true,
     default: 'MIT',
+  }, {
+    name: 'moduleTest',
+    message: '☯ preferred test framework:',
+    type: 'list',
+    choices: ['mocha', 'tape', 'ava'],
+    store: true,
+    default: 1,
   }];
 }
 

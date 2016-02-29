@@ -127,6 +127,7 @@ module.exports = yeoman.Base.extend({
         moduleKeywords: splitKeywords(props.moduleKeywords),
         moduleVersion: (props.moduleVersion || getPrefPropmts()[0].default),
         moduleLicense: (props.moduleLicense || getPrefPropmts()[1].default),
+        moduleTest: (props.moduleTest || getPrefPropmts().choices[getPrefPropmts()[2].default]),
         camelModuleName: camelize(moduleName),
         githubUsername: props.githubUsername,
         name: props.name,
@@ -142,9 +143,16 @@ module.exports = yeoman.Base.extend({
       cpTpl('_index.js', 'index.js');
       cpTpl('_package.json', 'package.json');
       cpTpl('_README.md', 'README.md');
-      cpTpl('_test.js', 'test.js');
       cpTpl('editorconfig', '.editorconfig');
       cpTpl('gitignore', '.gitignore');
+
+      switch (tpl.moduleTest) {
+        case 'mocha': cpTpl('_test-mocha.js', 'test.js'); break;
+        case 'tape': cpTpl('_test-tape.js', 'test.js'); break;
+        case 'ava': cpTpl('_test-ava.js', 'test.js'); break;
+        default: throw new Error('Unexpected test frameworl: ' + tpl.moduleTest);
+      }
+
 
       cb();
     }.bind(this));

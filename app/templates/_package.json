@@ -8,10 +8,10 @@
   ],
   "scripts": {
     "watch": "npm run transpile -- --watch",
-    "coverage": "nyc -r=text -r=lcov npm test", 
+    "coverage": "nyc -r=text -r=lcov npm test",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
-    "test": "mocha --require babel-core/register",
+    "test": "mocha --require babel-register",
     "tdd": "npm test -- --watch",
     "transpile": "babel index.js --out-file index.es5.js",
     "prepublish": "npm run transpile",

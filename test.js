@@ -64,7 +64,7 @@ it('generates all needed for ava', function (done) {
     .withPrompts(R.merge(defaults, { moduleTest: 'ava' }))
     .on('end', function () {
       assert.jsonFileContent('package.json', {
-        scripts: { test: 'tape test.js --require babel-register | tap-spec' },
+        scripts: { test: 'ava --require babel-register' },
       });
       assert.fileContent('package.json', /ava/);
       done();

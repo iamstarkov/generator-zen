@@ -33,7 +33,7 @@ it('generates expected files', function (done) {
     });
 });
 
-it.only('generates all needed for mocha', function (done) {
+it('generates all needed for mocha', function (done) {
   helpers.run(path.join(__dirname, './app'))
     .withPrompts(R.merge(defaults, { moduleTest: 'mocha' }))
     .on('end', function () {

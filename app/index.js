@@ -12,17 +12,10 @@ var spawnSync = require('spawn-sync');
 var getPersonPrompts = require('./person-prompts');
 var getPrefPropmts = require('./pref-prompts');
 var getPkgPrompts = require('./pkg-prompts');
+var splitKeywords = require('split-keywords');
 
 // concatAll :: [Array*…] -> Array
 var concatAll = R.unapply(R.flatten);
-
-// splitKeywords :: String -> [String]
-var splitKeywords = R.pipe(
-  R.defaultTo(''),
-  R.split(','),
-  R.map(R.trim),
-  R.filter(R.pipe(R.isEmpty, R.not))
-);
 
 // name :: String | Object -> String
 var name = R.ifElse(R.is(String), R.identity, R.pipe(R.keys, R.head));

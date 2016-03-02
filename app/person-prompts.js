@@ -1,8 +1,5 @@
-var R = require('ramda');
 var normalizeUrl = require('normalize-url');
-
-// ifEmpty :: String -> String -> true | String
-var ifEmpty = R.uncurryN(2, R.pipe(R.always, R.ifElse(R.isEmpty, R.__, R.T)));
+var ifEmpty = require('if-empty');
 
 function getPersonPrompts() {
   return [{
@@ -26,6 +23,13 @@ function getPersonPrompts() {
     message: '☯ your github username:',
     store: true,
     validate: ifEmpty('You have to provide a username'),
+  }, {
+    name: 'moduleTest',
+    message: '☯ preferred test framework:',
+    type: 'list',
+    choices: ['mocha', 'tape', 'ava'],
+    store: true,
+    default: 1,
   }];
 }
 

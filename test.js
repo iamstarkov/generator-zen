@@ -5,6 +5,11 @@ var path = require('path');
 var helpers = require('yeoman-test');
 var assert = require('yeoman-assert');
 var R = require('ramda');
+var isList = require('./app/stored-defaults').isList;
+var storedDefaultsObj = require('./app/stored-defaults').storedDefaultsObj;
+var getListDefault = require('./app/stored-defaults').getListDefault;
+var getDefault = require('./app/stored-defaults').getDefault;
+var storedDefaults = require('./app/stored-defaults').storedDefaults;
 
 var defaults = {
   moduleName: 'module',
@@ -12,6 +17,46 @@ var defaults = {
   website: 'test.com',
   moduleDesc: 'Your awsm module!',
 };
+
+it.only('pickup default value for stored prompts', function () {
+  var input = [{
+    name: 'moduleVersion',
+    message: '☯ preferred version to start:',
+    store: true,
+    default: '0.0.0',
+  }, {
+    name: 'moduleLicense',
+    message: '☯ preferred license:',
+    store: true,
+    default: 'MIT',
+  }, {
+    name: 'moduleTest',
+    message: '☯ preferred test framework:',
+    type: 'list',
+    choices: ['mocha', 'tape', 'ava'],
+    store: true,
+    default: 1,
+  }];
+
+  assert.equal(isList(input[0]), false);
+  assert.equal(getDefault(input[0]), '0.0.0');
+  assert.deepEqual(storedDefaultsObj(input[0]), { moduleVersion: '0.0.0' });
+
+  assert.equal(isList(input[1]), false);
+  assert.equal(getDefault(input[1]), 'MIT');
+  assert.deepEqual(storedDefaultsObj(input[1]), { moduleLicense: 'MIT' });
+
+  assert.equal(isList(input[2]), true);
+  assert.equal(getListDefault(input[2]), 'tape');
+  assert.equal(getDefault(input[2]), 'tape');
+  assert.deepEqual(storedDefaultsObj(input[2]), { moduleTest: 'tape' });
+
+  assert.deepEqual(storedDefaults(input), {
+    moduleVersion: '0.0.0',
+    moduleLicense: 'MIT',
+    moduleTest: 'tape',
+  });
+});
 
 it('generates expected files', function (done) {
   helpers.run(path.join(__dirname, './app'))

@@ -18,7 +18,7 @@ var defaults = {
   moduleDesc: 'Your awsm module!',
 };
 
-it.only('pickup default value for stored prompts', function () {
+it('pickup default value for stored prompts', function () {
   var input = [{
     name: 'moduleVersion',
     message: '☯ preferred version to start:',

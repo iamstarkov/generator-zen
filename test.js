@@ -36,6 +36,15 @@ it.only('pickup default value for stored prompts', function () {
     choices: ['mocha', 'tape', 'ava'],
     store: true,
     default: 1,
+  }, {
+    name: 'username',
+    default: 'asd',
+  }, {
+    name: 'website',
+    message: '☯ your website:',
+    store: true,
+    validate: function () {},
+    filter: function () {},
   }];
 
   assert.equal(isList(input[0]), false);
@@ -92,6 +101,7 @@ it('generates all needed for mocha', function (done) {
 });
 
 it('generates all needed for tape', function (done) {
+  console.log('MOCHA');
   helpers.run(path.join(__dirname, './app'))
     .withPrompts(R.merge(defaults, { moduleTest: 'tape' }))
     .on('end', function () {

@@ -65,11 +65,11 @@ module.exports = yeoman.Base.extend({
     this.option('force', { type: Boolean, required: false, alias: 'f', defaults: false,
       desc: 'Same as `--skip`',
     });
+    this.option('perfomant', { type: Boolean, required: false, alias: 'p', defaults: false,
+      desc: 'Perfomant install, ensure you have pnpm installed globally (`$ npm i -g pnpm`)',
+    });
     this.option('commit', { type: String, required: false, alias: 'c',
       desc: 'Commit message, optional',
-    });
-    this.option('perfomant', { type: Boolean, required: false, alias: 'p',
-      desc: 'Perfomant install, ensure you have pnpm installed globally (`$ npm i -g pnpm`)',
     });
   },
   initializing: function () {

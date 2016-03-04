@@ -6,6 +6,12 @@
 
 > ☯ zen node module scaffolder
 
+**News:** Now supports [mocha][m], [tape][t] or [ava][a] as test frameworks to choose from.
+
+[m]: https://github.com/mochajs/mocha
+[t]: https://github.com/substack/tape
+[a]: https://github.com/sindresorhus/ava
+
 ## Install
 
     npm install --global yo generator-zen

@@ -89,6 +89,7 @@ it('generates expected files', function (done) {
 
 it('generates all needed for mocha', function (done) {
   helpers.run(path.join(__dirname, './app'))
+    .withOptions({ all: true })
     .withPrompts(R.merge(defaults, { moduleTest: 'mocha' }))
     .on('end', function () {
       assert.jsonFileContent('package.json', {
@@ -96,13 +97,14 @@ it('generates all needed for mocha', function (done) {
       });
       assert.fileContent('package.json', /assert/);
       assert.fileContent('package.json', /mocha/);
+      assert.fileContent('test.js', /mocha/);
       done();
     });
 });
 
 it('generates all needed for tape', function (done) {
-  console.log('MOCHA');
   helpers.run(path.join(__dirname, './app'))
+    .withOptions({ all: true })
     .withPrompts(R.merge(defaults, { moduleTest: 'tape' }))
     .on('end', function () {
       assert.jsonFileContent('package.json', {
@@ -110,18 +112,21 @@ it('generates all needed for tape', function (done) {
       });
       assert.fileContent('package.json', /tap-spec/);
       assert.fileContent('package.json', /tape/);
+      assert.fileContent('test.js', /tape/);
       done();
     });
 });
 
 it('generates all needed for ava', function (done) {
   helpers.run(path.join(__dirname, './app'))
+    .withOptions({ all: true })
     .withPrompts(R.merge(defaults, { moduleTest: 'ava' }))
     .on('end', function () {
       assert.jsonFileContent('package.json', {
         scripts: { test: 'ava --require babel-register' },
       });
       assert.fileContent('package.json', /ava/);
+      assert.fileContent('test.js', /ava/);
       done();
     });
 });

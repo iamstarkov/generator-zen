@@ -9,13 +9,11 @@ var cat = require('./cat');
 var superb = require('superb');
 var mkdirp = require('mkdirp');
 var spawnSync = require('spawn-sync');
-var getPersonPrompts = require('./person-prompts');
-var getPrefPropmts = require('./pref-prompts');
-var getPkgPrompts = require('./pkg-prompts');
 var splitKeywords = require('split-keywords');
-
-// concatAll :: [Array*…] -> Array
-var concatAll = R.unapply(R.flatten);
+var normalizeUrl = require('normalize-url');
+var ifEmpty = require('if-empty');
+var slugify = require('underscore.string').slugify;
+var storedDefaults = require('./stored-defaults').storedDefaults;
 
 // name :: String | Object -> String
 var name = R.ifElse(R.is(String), R.identity, R.pipe(R.keys, R.head));
@@ -23,14 +21,17 @@ var name = R.ifElse(R.is(String), R.identity, R.pipe(R.keys, R.head));
 // options :: String | Object -> Object
 var options = R.ifElse(R.is(String), R.always({}), R.pipe(R.values, R.head));
 
-// getUnsavedPrompts :: (Object, [Object]) -> Object
-var getUnsavedPrompts = function (savedPrompts, allPrompts) {
-  var savedKeys = R.keys(savedPrompts);
-  var allKeys = R.map(R.prop('name'), allPrompts);
-  var getPrompt = R.pipe(R.propEq('name'), R.find(R.__, allPrompts));
-  var diffKeys = R.difference(allKeys, savedKeys);
-  return R.map(getPrompt, diffKeys);
-};
+// rejectNil :: Object -> Object
+var rejectNil = R.reject(R.isNil);
+
+function getNpmTestString(framework) {
+  switch (framework) {
+    case 'mocha': return 'mocha --require babel-register';
+    case 'tape': return 'tape test.js --require babel-register | tap-spec';
+    case 'ava': return 'tape test.js --require babel-register | tap-spec';
+    default: throw new Error('Unexpected test frameworl: ' + framework);
+  }
+}
 
 module.exports = yeoman.Base.extend({
   constructor: function () {
@@ -63,9 +64,9 @@ module.exports = yeoman.Base.extend({
   },
   initializing: function () {
     this.firstTime = !this._globalConfig.getAll().promptValues;
-    this.savedPrompts = this._globalConfig.getAll().promptValues || {};
-    this.shouldAskAll = this.options.all || this.options.a;
-    this.shouldSkipAll = this.options.skip || this.options.force || this.options.yes;
+    this.savedProps = this._globalConfig.getAll().promptValues || {};
+    this.shouldAskAll = !!(this.options.all || this.options.a);
+    this.shouldSkipAll = !!(this.options.skip || this.options.force || this.options.yes);
 
     if (this.name) {
       mkdirp(this.name);
@@ -78,34 +79,78 @@ module.exports = yeoman.Base.extend({
     }
   },
   prompting: function () {
+    var self = this;
     var cb = this.async();
-    var personPrompts = getPersonPrompts();
-    var prefPrompts = (!this.firstTime && !this.shouldAskAll) ? [] : getPrefPropmts();
-    var pkgPrompts = getPkgPrompts(this.appname);
+    var shouldAskPersonPrompts = function (prop) {
+      return R.or(
+        R.pipe(R.prop(prop), R.isNil)(self.savedProps),
+        R.identity(self.shouldAskAll)
+      );
+    };
+    var shouldAskPrefPrompts = R.or(self.firstTime, self.shouldAskAll);
 
-    if (this.name) {
-      pkgPrompts = R.filter(R.pipe(R.propEq('name', 'moduleName'), R.not), pkgPrompts);
-    }
+    var prompts = [{
+      name: 'name',
+      message: '☯ your name:',
+      store: true,
+      validate: ifEmpty('You have to provide name'),
+      when: shouldAskPersonPrompts('name'),
+    }, {
+      name: 'email',
+      message: '☯ your email:',
+      store: true,
+      validate: ifEmpty('You have to provide email'),
+      when: shouldAskPersonPrompts('email'),
+    }, {
+      name: 'website',
+      message: '☯ your website:',
+      store: true,
+      validate: ifEmpty('You have to provide website'),
+      filter: normalizeUrl,
+      when: shouldAskPersonPrompts('website'),
+    }, {
+      name: 'githubUsername',
+      message: '☯ your github username:',
+      store: true,
+      validate: ifEmpty('You have to provide a username'),
+      when: shouldAskPersonPrompts('githubUsername'),
+    }, {
+      name: 'moduleVersion',
+      message: '☯ preferred version to start:',
+      store: true,
+      default: '0.0.0',
+      when: shouldAskPrefPrompts,
+    }, {
+      name: 'moduleLicense',
+      message: '☯ preferred license:',
+      store: true,
+      default: 'MIT',
+      when: shouldAskPrefPrompts,
+    }, {
+      name: 'moduleTest',
+      message: '☯ preferred test framework:',
+      type: 'list',
+      choices: ['mocha', 'tape', 'ava'],
+      store: true,
+      default: 1,
+      when: shouldAskPrefPrompts,
+    }, {
+      name: 'moduleName',
+      message: '☯ name:',
+      default: this.appname.replace(/\s/g, '-'),
+      filter: slugify,
+    }, {
+      name: 'moduleDesc',
+      message: '☯ description:',
+    }, {
+      name: 'moduleKeywords',
+      message: '☯ keywords:',
+      filter: splitKeywords,
+    }];
 
-    var allPrompts = concatAll(personPrompts, prefPrompts, pkgPrompts);
-    var promptsToAsk = getUnsavedPrompts(this.savedPrompts, allPrompts);
-
-    if (this.shouldAskAll) {
-      promptsToAsk = allPrompts;
-    }
-
-    if (this.shouldSkipAll) {
-      promptsToAsk = getUnsavedPrompts(this.savedPrompts, personPrompts);
-    }
-
-    this.prompt(promptsToAsk, function (inputProps) {
-      var props = R.merge(inputProps, this.savedPrompts);
-
-      if (this.shouldAskAll) {
-        props = inputProps;
-      }
+    this.prompt(prompts, function (inputProps) {
+      var props = R.mergeAll([this.savedProps, rejectNil(inputProps), storedDefaults(prompts)]);
       if (this.shouldSkipAll) {
-        props = R.merge(inputProps, this.savedPrompts);
         this.conflicter.force = true;
       }
 
@@ -115,18 +160,19 @@ module.exports = yeoman.Base.extend({
       }
 
       var tpl = {
-        moduleName: moduleName,
-        moduleDesc: this.shouldSkipAll ? 'My ' + superb() + ' module' : props.moduleDesc,
-        moduleKeywords: splitKeywords(props.moduleKeywords),
-        moduleVersion: (props.moduleVersion || getPrefPropmts()[0].default),
-        moduleLicense: (props.moduleLicense || getPrefPropmts()[1].default),
-        moduleTest: (props.moduleTest || getPrefPropmts().choices[getPrefPropmts()[2].default]),
+        moduleName: props.moduleName,
+        moduleDesc: (props.moduleDesc || ('My ' + superb() + ' module')),
+        moduleKeywords: (props.moduleKeywords || []),
+        moduleVersion: props.moduleVersion,
+        moduleLicense: props.moduleLicense,
+        moduleTest: props.moduleTest,
         camelModuleName: camelize(moduleName),
         githubUsername: props.githubUsername,
         name: props.name,
         email: props.email,
         website: props.website,
         humanizedWebsite: humanizeUrl(props.website),
+        npmTestString: getNpmTestString(props.moduleTest),
       };
 
       var cpTpl = function (from, to) {
@@ -163,7 +209,11 @@ module.exports = yeoman.Base.extend({
     ].forEach(function (input) {
       this.composeWith(
         name(input),
-        { options: R.merge(options(input), { 'skip-install': this.options.perfomant ? true : this.options['skip-install'] }) },
+        { options: R.merge(options(input), {
+          'skip-install': this.options.perfomant
+                ? true
+                : this.options['skip-install'],
+        }) },
         { local: require.resolve('generator-' + name(input)) }
       );
     }.bind(this));

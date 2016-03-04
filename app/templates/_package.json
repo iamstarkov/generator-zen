@@ -11,9 +11,7 @@
     "coverage": "nyc -r=text -r=lcov npm test",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
-    <% if (moduleTest === 'mocha') {%>"test": "mocha --require babel-register",<% } %>
-    <% if (moduleTest === 'tape') {%>"test": "tape test.js --require babel-register | tap-spec",<% } %>
-    <% if (moduleTest === 'ava') {%>"test": "ava --require babel-register",<% } %>
+    "test": "<%= npmTestString %>",
     "tdd": "npm test -- --watch",
     "transpile": "babel index.js --out-file index.es5.js",
     "prepublish": "npm run transpile",

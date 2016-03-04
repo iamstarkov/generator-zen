@@ -28,7 +28,7 @@ function getNpmTestString(framework) {
   switch (framework) {
     case 'mocha': return 'mocha --require babel-register';
     case 'tape': return 'tape test.js --require babel-register | tap-spec';
-    case 'ava': return 'tape test.js --require babel-register | tap-spec';
+    case 'ava': return 'ava --require babel-register';
     default: throw new Error('Unexpected test frameworl: ' + framework);
   }
 }

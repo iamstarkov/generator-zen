@@ -8,10 +8,10 @@
   ],
   "scripts": {
     "watch": "npm run transpile -- --watch",
-    "coverage": "nyc -r=text -r=lcov npm test", 
+    "coverage": "nyc -r=text -r=lcov npm test",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
-    "test": "mocha --require babel-core/register",
+    "test": "<%= npmTestString %>",
     "tdd": "npm test -- --watch",
     "transpile": "babel index.js --out-file index.es5.js",
     "prepublish": "npm run transpile",
@@ -34,11 +34,9 @@
   },
   "homepage": "https://github.com/<%= githubUsername %>/<%= moduleName %>#readme",
   "devDependencies": {
-    "assert": "*",
-    "coveralls": "*",
-    "mocha": "*",
-    "npm-run-all": "*",
-    "nyc": "^5.6.0",
-    "rimraf": "*"
+    "coveralls": "^2.11.18",
+    "npm-run-all": "^1.5.1",
+    "nyc": "^6.0.0",
+    "rimraf": "^2.5.2"
   }
 }

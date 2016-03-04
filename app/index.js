@@ -74,7 +74,7 @@ module.exports = yeoman.Base.extend({
   },
   initializing: function () {
     this.firstTime = !this._globalConfig.getAll().promptValues;
-    this.savedProps = this._globalConfig.getAll().promptValues || {};
+    this.savedAnswers = this._globalConfig.getAll().promptValues || {};
     this.shouldAskAll = !!(this.options.all || this.options.a);
     this.shouldSkipAll = !!(this.options.skip || this.options.force || this.options.yes);
     this.testFrameworks = ['mocha', 'tape', 'ava'];
@@ -89,7 +89,7 @@ module.exports = yeoman.Base.extend({
     var cb = this.async();
     var shouldAskPersonPrompts = function (prop) {
       return R.or(
-        R.pipe(R.prop(prop), R.isNil)(self.savedProps),
+        R.pipe(R.prop(prop), R.isNil)(self.savedAnswers),
         R.identity(self.shouldAskAll)
       );
     };
@@ -157,7 +157,7 @@ module.exports = yeoman.Base.extend({
     this.prompt(questions, function (inputAnswers) {
       this.props = R.mergeAll([
         storedDefaults(questions), // Default values will be overrided by saved ones
-        this.savedProps,           // Saved values will be overrided by user input
+        this.savedAnswers,         // Saved values will be overrided by user input
         rejectNil(inputAnswers),
       ]);
 

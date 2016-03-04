@@ -155,13 +155,16 @@ module.exports = yeoman.Base.extend({
       message: '☯ name:',
       default: slugify(this.name || this.appname),
       filter: slugify,
+      when: !this.shouldSkipAll,
     }, {
       name: 'moduleDesc',
       message: '☯ description:',
+      when: !this.shouldSkipAll,
     }, {
       name: 'moduleKeywords',
       message: '☯ keywords:',
       filter: splitKeywords,
+      when: !this.shouldSkipAll,
     }];
 
     this.prompt(questions, function (inputAnswers) {

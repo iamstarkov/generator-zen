@@ -79,11 +79,6 @@ module.exports = yeoman.Base.extend({
     this.shouldSkipAll = !!(this.options.skip || this.options.force || this.options.yes);
     this.testFrameworks = ['mocha', 'tape', 'ava'];
 
-    if (this.name) {
-      mkdirp(this.name);
-      this.destinationRoot(this.destinationPath(this.name));
-    }
-
     if (this.shouldAskAll && this.shouldSkipAll) {
       this.log(cat);
       return;
@@ -170,43 +165,43 @@ module.exports = yeoman.Base.extend({
         this.conflicter.force = true;
       }
 
-      var moduleName = this.props.moduleName;
-      if (!moduleName) {
-        moduleName = this.name ? this.name : this.appname.replace(/\s/g, '-');
-      }
-
-      var tpl = {
-        moduleName: this.props.moduleName,
-        moduleDesc: (this.props.moduleDesc || ('My ' + superb() + ' module')),
-        moduleKeywords: (this.props.moduleKeywords || []),
-        moduleVersion: this.props.moduleVersion,
-        moduleLicense: this.props.moduleLicense,
-        moduleTest: this.props.moduleTest,
-        camelModuleName: camelize(moduleName),
-        githubUsername: this.props.githubUsername,
-        name: this.props.name,
-        email: this.props.email,
-        website: this.props.website,
-        humanizedWebsite: humanizeUrl(this.props.website),
-        npmTestString: R.prop(this.props.moduleTest, npmTestStrings),
-      };
-
-      var cpTpl = function (from, to) {
-        this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), tpl);
-      }.bind(this);
-
-      cpTpl('_index.js', 'index.js');
-      cpTpl('_package.json', 'package.json');
-      cpTpl('_README.md', 'README.md');
-      cpTpl('editorconfig', '.editorconfig');
-      cpTpl('gitignore', '.gitignore');
-      cpTpl('gitignore', '.gitignore');
-      cpTpl('_test-' + this.props.moduleTest + '.js', 'test.js');
-
       cb();
     }.bind(this));
   },
   writing: function () {
+    if (this.name) {
+      mkdirp(this.props.moduleName);
+      this.destinationRoot(this.destinationPath(this.props.moduleName));
+    }
+
+    var tpl = {
+      moduleName: this.props.moduleName,
+      moduleDesc: (this.props.moduleDesc || ('My ' + superb() + ' module')),
+      moduleKeywords: (this.props.moduleKeywords || []),
+      moduleVersion: this.props.moduleVersion,
+      moduleLicense: this.props.moduleLicense,
+      moduleTest: this.props.moduleTest,
+      camelModuleName: camelize(this.props.moduleName),
+      githubUsername: this.props.githubUsername,
+      name: this.props.name,
+      email: this.props.email,
+      website: this.props.website,
+      humanizedWebsite: humanizeUrl(this.props.website),
+      npmTestString: R.prop(this.props.moduleTest, npmTestStrings),
+    };
+
+    var cpTpl = function (from, to) {
+      this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), tpl);
+    }.bind(this);
+
+    cpTpl('_index.js', 'index.js');
+    cpTpl('_package.json', 'package.json');
+    cpTpl('_README.md', 'README.md');
+    cpTpl('editorconfig', '.editorconfig');
+    cpTpl('gitignore', '.gitignore');
+    cpTpl('gitignore', '.gitignore');
+    cpTpl('_test-' + this.props.moduleTest + '.js', 'test.js');
+
     var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var devDeps = R.prop(this.props.moduleTest, testDevDeps).reduce(function (state, dep) {
       return R.merge(state, R.zipObj([depName(dep)], [depVersion(dep)]));

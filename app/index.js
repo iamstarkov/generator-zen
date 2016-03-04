@@ -176,7 +176,7 @@ module.exports = yeoman.Base.extend({
 
     var tpl = {
       moduleName: this.props.moduleName,
-      moduleDesc: (this.props.moduleDesc || ('My ' + superb() + ' module')),
+      moduleDesc: this.props.moduleDesc || (this.shouldSkipAll ? ('My ' + superb() + ' module') : null),
       moduleKeywords: (this.props.moduleKeywords || []),
       moduleVersion: this.props.moduleVersion,
       moduleLicense: this.props.moduleLicense,

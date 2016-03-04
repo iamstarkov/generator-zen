@@ -14,6 +14,7 @@ var normalizeUrl = require('normalize-url');
 var ifEmpty = require('if-empty');
 var slugify = require('underscore.string').slugify;
 var storedDefaults = require('./stored-defaults').storedDefaults;
+var sortedObject = require('sorted-object');
 
 // name :: String | Object -> String
 var name = R.ifElse(R.is(String), R.identity, R.pipe(R.keys, R.head));
@@ -35,6 +36,15 @@ function getNpmTestString(framework) {
     case 'mocha': return 'mocha --require babel-register';
     case 'tape': return 'tape test.js --require babel-register | tap-spec';
     case 'ava': return 'ava --require babel-register';
+    default: throw new Error('Unexpected test frameworl: ' + framework);
+  }
+}
+
+function getTestDevDeps(framework) {
+  switch (framework) {
+    case 'mocha': return ['assert@^1.3.0', 'mocha@^2.4.5'];
+    case 'tape': return ['tap-spec@^4.1.1', 'tape@^4.4.0'];
+    case 'ava': return ['ava@^0.12.0'];
     default: throw new Error('Unexpected test frameworl: ' + framework);
   }
 }
@@ -198,11 +208,17 @@ module.exports = yeoman.Base.extend({
         default: throw new Error('Unexpected test frameworl: ' + tpl.moduleTest);
       }
 
-
       cb();
     }.bind(this));
   },
   writing: function () {
+    var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+    var devDeps = getTestDevDeps(this.props.moduleTest).reduce(function (state, dep) {
+      return R.merge(state, R.zipObj([depName(dep)], [depVersion(dep)]));
+    }, {});
+    pkg.devDependencies = sortedObject(R.merge((pkg.devDependencies || {}), devDeps));
+    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+
     var commitsRaw = spawnSync('git', ['log', '--oneline']).stdout.toString();
     var commits = commitsRaw.split('\n').filter(Boolean);
     var commitMessage = '☯ zen ' + (R.isEmpty(commits) ? 'init' : 'update');

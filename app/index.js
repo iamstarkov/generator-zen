@@ -149,7 +149,7 @@ module.exports = yeoman.Base.extend({
     }];
 
     this.prompt(prompts, function (inputProps) {
-      var props = R.mergeAll([this.savedProps, rejectNil(inputProps), storedDefaults(prompts)]);
+      var props = R.mergeAll([this.savedProps, storedDefaults(prompts), rejectNil(inputProps)]);
       if (this.shouldSkipAll) {
         this.conflicter.force = true;
       }

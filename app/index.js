@@ -95,7 +95,7 @@ module.exports = yeoman.Base.extend({
     };
     var shouldAskPrefPrompts = R.or(self.firstTime, self.shouldAskAll);
 
-    var prompts = [{
+    var questions = [{
       name: 'name',
       message: '☯ your name:',
       store: true,
@@ -154,10 +154,10 @@ module.exports = yeoman.Base.extend({
       filter: splitKeywords,
     }];
 
-    this.prompt(prompts, function (inputProps) {
+    this.prompt(questions, function (inputProps) {
       // Default values will be overrided by saved ones
       // Saved values will be overrided by user input
-      this.props = R.mergeAll([storedDefaults(prompts), this.savedProps, rejectNil(inputProps)]);
+      this.props = R.mergeAll([storedDefaults(questions), this.savedProps, rejectNil(inputProps)]);
 
       if (R.not(R.contains(this.props.moduleTest, this.testFrameworks))) {
         throw new Error('Unexpected test frameworl: ' + this.props.moduleTest);

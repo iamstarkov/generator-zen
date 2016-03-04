@@ -155,7 +155,9 @@ module.exports = yeoman.Base.extend({
     }];
 
     this.prompt(prompts, function (inputProps) {
-      this.props = R.mergeAll([this.savedProps, storedDefaults(prompts), rejectNil(inputProps)]);
+      // Default values will be overrided by saved ones
+      // Saved values will be overrided by user input
+      this.props = R.mergeAll([storedDefaults(prompts), this.savedProps, rejectNil(inputProps)]);
 
       if (R.not(R.contains(this.props.moduleTest, this.testFrameworks))) {
         throw new Error('Unexpected test frameworl: ' + this.props.moduleTest);

@@ -154,10 +154,10 @@ module.exports = yeoman.Base.extend({
       filter: splitKeywords,
     }];
 
-    this.prompt(questions, function (inputProps) {
+    this.prompt(questions, function (inputAnswers) {
       // Default values will be overrided by saved ones
       // Saved values will be overrided by user input
-      this.props = R.mergeAll([storedDefaults(questions), this.savedProps, rejectNil(inputProps)]);
+      this.props = R.mergeAll([storedDefaults(questions), this.savedProps, rejectNil(inputAnswers)]);
 
       if (R.not(R.contains(this.props.moduleTest, this.testFrameworks))) {
         throw new Error('Unexpected test frameworl: ' + this.props.moduleTest);

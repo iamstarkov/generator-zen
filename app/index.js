@@ -24,6 +24,12 @@ var options = R.ifElse(R.is(String), R.always({}), R.pipe(R.values, R.head));
 // rejectNil :: Object -> Object
 var rejectNil = R.reject(R.isNil);
 
+// depName :: String -> String
+var depName = R.pipe(R.split('@'), R.head);
+
+// depVersion :: String -> String
+var depVersion = R.pipe(R.split('@'), R.last);
+
 function getNpmTestString(framework) {
   switch (framework) {
     case 'mocha': return 'mocha --require babel-register';

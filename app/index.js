@@ -83,6 +83,7 @@ module.exports = yeoman.Base.extend({
     this.savedProps = this._globalConfig.getAll().promptValues || {};
     this.shouldAskAll = !!(this.options.all || this.options.a);
     this.shouldSkipAll = !!(this.options.skip || this.options.force || this.options.yes);
+    this.testFrameworks = ['mocha', 'tape', 'ava'];
 
     if (this.name) {
       mkdirp(this.name);
@@ -146,7 +147,7 @@ module.exports = yeoman.Base.extend({
       name: 'moduleTest',
       message: '☯ preferred test framework:',
       type: 'list',
-      choices: ['mocha', 'tape', 'ava'],
+      choices: this.testFrameworks,
       store: true,
       default: 1,
       when: shouldAskPrefPrompts,
@@ -166,6 +167,11 @@ module.exports = yeoman.Base.extend({
 
     this.prompt(prompts, function (inputProps) {
       this.props = R.mergeAll([this.savedProps, storedDefaults(prompts), rejectNil(inputProps)]);
+
+      if (R.not(R.contains(this.props.moduleTest, this.testFrameworks))) {
+        throw new Error('Unexpected test frameworl: ' + this.props.moduleTest);
+      }
+
       if (this.shouldSkipAll) {
         this.conflicter.force = true;
       }

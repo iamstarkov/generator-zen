@@ -85,6 +85,8 @@ module.exports = yeoman.Base.extend({
     if (this.options.debug) {
       this.log('OPTIONS:');
       this.log(R.pickAll(['all', 'skip', 'yes', 'perfomant', 'debug', 'commit'], this.options));
+      this.log('shouldAskAll: ' + this.shouldAskAll);
+      this.log('shouldSkipAll: ' + this.shouldSkipAll);
     }
 
     if (this.shouldAskAll && this.shouldSkipAll) {

@@ -41,6 +41,7 @@ Speed up dependencies installing with `--perfomant/-p` option, it uses `pnpm`, s
       -y,   --yes           # Same as `--skip`                                                                                   Default: false
       -f,   --force         # Same as `--skip`                                                                                   Default: false
       -p,   --perfomant     # Perfomant install, so ensure you have pnpm installed globally (`$ npm i -g pnpm`)                  Default: false
+      -d,   --debug         # Debug mode                                                                                         Default: false
       -c,   --commit        # Commit message
 
     Arguments:

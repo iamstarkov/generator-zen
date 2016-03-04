@@ -68,6 +68,9 @@ module.exports = yeoman.Base.extend({
     this.option('perfomant', { type: Boolean, required: false, alias: 'p', defaults: false,
       desc: 'Perfomant install, ensure you have pnpm installed globally (`$ npm i -g pnpm`)',
     });
+    this.option('debug', { type: Boolean, required: false, alias: 'd', defaults: false,
+      desc: 'Debug mode',
+    });
     this.option('commit', { type: String, required: false, alias: 'c',
       desc: 'Commit message, optional',
     });
@@ -78,6 +81,11 @@ module.exports = yeoman.Base.extend({
     this.shouldAskAll = !!(this.options.all || this.options.a);
     this.shouldSkipAll = !!(this.options.skip || this.options.force || this.options.yes);
     this.testFrameworks = ['mocha', 'tape', 'ava'];
+
+    if (this.options.debug) {
+      this.log('OPTIONS:');
+      this.log(R.pickAll(['all', 'skip', 'yes', 'perfomant', 'debug', 'commit'], this.options));
+    }
 
     if (this.shouldAskAll && this.shouldSkipAll) {
       this.log(cat);
@@ -160,6 +168,18 @@ module.exports = yeoman.Base.extend({
         this.savedAnswers,         // Saved values will be overrided by user input
         rejectNil(inputAnswers),
       ]);
+
+      if (this.options.debug) {
+        this.log('\nANSWERS:');
+        this.log('STORED:');
+        this.log(storedDefaults(questions));
+        this.log('SAVED:');
+        this.log(this.savedAnswers);
+        this.log('INPUT:');
+        this.log(inputAnswers);
+        this.log('\nRESULT:');
+        this.log(this.props);
+      }
 
       if (R.not(R.contains(this.props.moduleTest, this.testFrameworks))) {
         throw new Error('Unexpected test frameworl: ' + this.props.moduleTest);

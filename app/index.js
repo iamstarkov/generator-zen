@@ -31,23 +31,17 @@ var depName = R.pipe(R.split('@'), R.head);
 // depVersion :: String -> String
 var depVersion = R.pipe(R.split('@'), R.last);
 
-function getNpmTestString(framework) {
-  switch (framework) {
-    case 'mocha': return 'mocha --require babel-register';
-    case 'tape': return 'tape test.js --require babel-register | tap-spec';
-    case 'ava': return 'ava --require babel-register';
-    default: throw new Error('Unexpected test frameworl: ' + framework);
-  }
-}
+var npmTestStrings = {
+  mocha: 'mocha --require babel-register',
+  tape: 'tape test.js --require babel-register | tap-spec',
+  ava: 'ava --require babel-register',
+};
 
-function getTestDevDeps(framework) {
-  switch (framework) {
-    case 'mocha': return ['assert@^1.3.0', 'mocha@^2.4.5'];
-    case 'tape': return ['tap-spec@^4.1.1', 'tape@^4.4.0'];
-    case 'ava': return ['ava@^0.12.0'];
-    default: throw new Error('Unexpected test frameworl: ' + framework);
-  }
-}
+var testDevDeps = {
+  mocha: ['assert@^1.3.0', 'mocha@^2.4.5'],
+  tape: ['tap-spec@^4.1.1', 'tape@^4.4.0'],
+  ava: ['ava@^0.12.0'],
+};
 
 module.exports = yeoman.Base.extend({
   constructor: function () {
@@ -194,7 +188,7 @@ module.exports = yeoman.Base.extend({
         email: this.props.email,
         website: this.props.website,
         humanizedWebsite: humanizeUrl(this.props.website),
-        npmTestString: getNpmTestString(this.props.moduleTest),
+        npmTestString: R.prop(this.props.moduleTest, npmTestStrings),
       };
 
       var cpTpl = function (from, to) {
@@ -206,20 +200,15 @@ module.exports = yeoman.Base.extend({
       cpTpl('_README.md', 'README.md');
       cpTpl('editorconfig', '.editorconfig');
       cpTpl('gitignore', '.gitignore');
-
-      switch (tpl.moduleTest) {
-        case 'mocha': cpTpl('_test-mocha.js', 'test.js'); break;
-        case 'tape': cpTpl('_test-tape.js', 'test.js'); break;
-        case 'ava': cpTpl('_test-ava.js', 'test.js'); break;
-        default: throw new Error('Unexpected test frameworl: ' + tpl.moduleTest);
-      }
+      cpTpl('gitignore', '.gitignore');
+      cpTpl('_test-' + this.props.moduleTest + '.js', 'test.js');
 
       cb();
     }.bind(this));
   },
   writing: function () {
     var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    var devDeps = getTestDevDeps(this.props.moduleTest).reduce(function (state, dep) {
+    var devDeps = R.prop(this.props.moduleTest, testDevDeps).reduce(function (state, dep) {
       return R.merge(state, R.zipObj([depName(dep)], [depVersion(dep)]));
     }, {});
     pkg.devDependencies = sortedObject(R.merge((pkg.devDependencies || {}), devDeps));

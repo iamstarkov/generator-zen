@@ -155,30 +155,30 @@ module.exports = yeoman.Base.extend({
     }];
 
     this.prompt(prompts, function (inputProps) {
-      var props = R.mergeAll([this.savedProps, storedDefaults(prompts), rejectNil(inputProps)]);
+      this.props = R.mergeAll([this.savedProps, storedDefaults(prompts), rejectNil(inputProps)]);
       if (this.shouldSkipAll) {
         this.conflicter.force = true;
       }
 
-      var moduleName = props.moduleName;
+      var moduleName = this.props.moduleName;
       if (!moduleName) {
         moduleName = this.name ? this.name : this.appname.replace(/\s/g, '-');
       }
 
       var tpl = {
-        moduleName: props.moduleName,
-        moduleDesc: (props.moduleDesc || ('My ' + superb() + ' module')),
-        moduleKeywords: (props.moduleKeywords || []),
-        moduleVersion: props.moduleVersion,
-        moduleLicense: props.moduleLicense,
-        moduleTest: props.moduleTest,
+        moduleName: this.props.moduleName,
+        moduleDesc: (this.props.moduleDesc || ('My ' + superb() + ' module')),
+        moduleKeywords: (this.props.moduleKeywords || []),
+        moduleVersion: this.props.moduleVersion,
+        moduleLicense: this.props.moduleLicense,
+        moduleTest: this.props.moduleTest,
         camelModuleName: camelize(moduleName),
-        githubUsername: props.githubUsername,
-        name: props.name,
-        email: props.email,
-        website: props.website,
-        humanizedWebsite: humanizeUrl(props.website),
-        npmTestString: getNpmTestString(props.moduleTest),
+        githubUsername: this.props.githubUsername,
+        name: this.props.name,
+        email: this.props.email,
+        website: this.props.website,
+        humanizedWebsite: humanizeUrl(this.props.website),
+        npmTestString: getNpmTestString(this.props.moduleTest),
       };
 
       var cpTpl = function (from, to) {

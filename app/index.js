@@ -148,7 +148,7 @@ module.exports = yeoman.Base.extend({
     }, {
       name: 'moduleName',
       message: '☯ name:',
-      default: this.appname.replace(/\s/g, '-'),
+      default: slugify(this.name || this.appname),
       filter: slugify,
     }, {
       name: 'moduleDesc',

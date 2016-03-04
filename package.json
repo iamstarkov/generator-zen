@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/iamstarkov/generator-zen#readme",
   "devDependencies": {
+    "babel-eslint": "^5.0.0",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^4.0.0",
     "eslint-plugin-require-path-exists": "^1.1.4",

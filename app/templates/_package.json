@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/<%= githubUsername %>/<%= moduleName %>#readme",
   "devDependencies": {
-    "coveralls": "^2.11.18",
+    "coveralls": "^2.11.8",
     "npm-run-all": "^1.5.1",
     "nyc": "^6.0.0",
     "rimraf": "^2.5.2"

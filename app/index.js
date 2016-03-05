@@ -83,6 +83,7 @@ module.exports = yeoman.Base.extend({
     this.testFrameworks = ['mocha', 'tape', 'ava'];
 
     if (this.options.debug) {
+      this.log('ARGUMENT: name ' + this.name);
       this.log('OPTIONS:');
       this.log(R.pickAll(['all', 'skip', 'yes', 'perfomant', 'debug', 'commit'], this.options));
       this.log('shouldAskAll: ' + this.shouldAskAll);

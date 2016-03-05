@@ -172,6 +172,7 @@ module.exports = yeoman.Base.extend({
       this.props = R.mergeAll([
         storedDefaults(questions), // Default values will be overrided by saved ones
         this.savedAnswers,         // Saved values will be overrided by user input
+        { moduleName: this.name }, // argument name will be used only if user input skipped
         rejectNil(inputAnswers),
       ]);
 

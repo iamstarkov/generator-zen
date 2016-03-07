@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/<%= githubUsername %>/<%= moduleName %>#readme",
   "devDependencies": {
+    "chokidar-cli": "^1.2.0",
     "coveralls": "^2.11.8",
     "npm-run-all": "^1.5.1",
     "nyc": "^6.0.0",

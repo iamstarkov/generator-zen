@@ -41,9 +41,9 @@ it('generates all needed for mocha', function (done) {
       assert.jsonFileContent('package.json', {
         scripts: { test: 'mocha --require babel-register' },
         devDependencies: {
-          'assert': '^1.3.0',
-          'mocha': '^2.4.5',
-        }
+          assert: '^1.3.0',
+          mocha: '^2.4.5',
+        },
       });
       assert.fileContent('package.json', /assert/);
       assert.fileContent('package.json', /mocha/);
@@ -61,8 +61,8 @@ it('generates all needed for tape', function (done) {
         scripts: { test: 'tape test.js --require babel-register | tap-spec' },
         devDependencies: {
           'tap-spec': '^4.1.1',
-          'tape': '^4.4.0',
-        }
+          tape: '^4.4.0',
+        },
       });
       assert.fileContent('test.js', /tape/);
       done();
@@ -77,8 +77,8 @@ it('generates all needed for ava', function (done) {
       assert.jsonFileContent('package.json', {
         scripts: { test: 'ava --require babel-register' },
         devDependencies: {
-          'ava': '^0.12.0',
-        }
+          ava: '^0.12.0',
+        },
       });
       assert.fileContent('test.js', /ava/);
       done();

@@ -13,7 +13,7 @@ var splitKeywords = require('split-keywords');
 var normalizeUrl = require('normalize-url');
 var ifEmpty = require('if-empty');
 var slugify = require('underscore.string').slugify;
-var storedDefaults = require('./stored-defaults').storedDefaults;
+var storedYoDefaults = require('stored-yo-defaults');
 var sortedObject = require('sorted-object');
 
 // name :: String | Object -> String
@@ -170,16 +170,16 @@ module.exports = yeoman.Base.extend({
 
     this.prompt(questions, function (inputAnswers) {
       this.props = R.mergeAll([
-        storedDefaults(questions), // Default values will be overrided by saved ones
-        this.savedAnswers,         // Saved values will be overrided by user input
-        { moduleName: this.name }, // argument name will be used only if user input skipped
+        storedYoDefaults(questions), // Default values will be overrided by saved ones
+        this.savedAnswers,           // Saved values will be overrided by user input
+        { moduleName: this.name },   // argument name will be used only if user input skipped
         rejectNil(inputAnswers),
       ]);
 
       if (this.options.debug) {
         this.log('\nANSWERS:');
         this.log('STORED:');
-        this.log(storedDefaults(questions));
+        this.log(storedYoDefaults(questions));
         this.log('SAVED:');
         this.log(this.savedAnswers);
         this.log('INPUT:');

@@ -4,5 +4,8 @@ node_js:
   - '0.10'
   - 'iojs-2'
   - 'iojs-1'
+before_script:
+  - 'git config --global user.email "you@example.com"'
+  - 'git config --global user.name "Your Name"'
 after_script:
   - npm run coveralls

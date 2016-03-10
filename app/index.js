@@ -16,6 +16,7 @@ var slugify = require('underscore.string').slugify;
 var storedYoDefaults = require('stored-yo-defaults');
 var sortedObject = require('sorted-object');
 var depsObject = require('deps-object');
+var testFrameworksHash = require('./test-frameworks');
 
 // name :: String | Object -> String
 var name = R.ifElse(R.is(String), R.identity, R.pipe(R.keys, R.head));
@@ -25,18 +26,6 @@ var options = R.ifElse(R.is(String), R.always({}), R.pipe(R.values, R.head));
 
 // rejectNil :: Object -> Object
 var rejectNil = R.reject(R.isNil);
-
-var npmTestStrings = {
-  mocha: 'mocha --require babel-register',
-  tape: 'tape test.js --require babel-register | tap-spec',
-  ava: 'ava --require babel-register',
-};
-
-var testDevDeps = {
-  mocha: ['assert@^1.3.0', 'mocha@^2.4.5'],
-  tape: ['tap-spec@^4.1.1', 'tape@^4.4.0'],
-  ava: ['ava@^0.12.0'],
-};
 
 module.exports = yeoman.Base.extend({
   constructor: function () {
@@ -75,7 +64,7 @@ module.exports = yeoman.Base.extend({
     this.savedAnswers = this._globalConfig.getAll().promptValues || {};
     this.shouldAskAll = !!(this.options.all || this.options.a);
     this.shouldSkipAll = !!(this.options.skip || this.options.force || this.options.yes);
-    this.testFrameworks = ['mocha', 'tape', 'ava'];
+    this.testFrameworksKeys = R.keys(testFrameworksHash);
 
     if (this.options.debug) {
       this.log('ARGUMENT: name ' + this.name);
@@ -142,7 +131,7 @@ module.exports = yeoman.Base.extend({
       name: 'moduleTest',
       message: '☯ preferred test framework:',
       type: 'list',
-      choices: this.testFrameworks,
+      choices: this.testFrameworksKeys,
       store: true,
       default: 1,
       when: shouldAskPrefPrompts,
@@ -170,6 +159,7 @@ module.exports = yeoman.Base.extend({
         { moduleName: this.name },   // argument name will be used only if user input skipped
         rejectNil(inputAnswers),
       ]);
+      this.testFramework = R.prop(this.props.moduleTest, testFrameworksHash);
 
       if (this.options.debug) {
         this.log('\nANSWERS:');
@@ -183,7 +173,7 @@ module.exports = yeoman.Base.extend({
         this.log(this.props);
       }
 
-      if (R.not(R.contains(this.props.moduleTest, this.testFrameworks))) {
+      if (!this.testFramework) {
         throw new Error('Unexpected test frameworl: ' + this.props.moduleTest);
       }
 
@@ -213,7 +203,8 @@ module.exports = yeoman.Base.extend({
       email: this.props.email,
       website: this.props.website,
       humanizedWebsite: humanizeUrl(this.props.website),
-      npmTestString: R.prop(this.props.moduleTest, npmTestStrings),
+      npmTestString: this.testFramework.test,
+      npmTddString: this.testFramework.tdd,
     };
 
     var cpTpl = function (from, to) {
@@ -230,8 +221,7 @@ module.exports = yeoman.Base.extend({
 
     var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var currentDeps = pkg.devDependencies || {};
-
-    return depsObject(R.prop(this.props.moduleTest, testDevDeps))
+    return depsObject(this.testFramework.deps)
       .then(function (testDeps) {
         pkg.devDependencies = sortedObject(R.merge(currentDeps, testDeps));
         this.fs.writeJSON(this.destinationPath('package.json'), pkg);

@@ -12,7 +12,7 @@
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
     "test": "<%= npmTestString %>",
-    "tdd": "npm test -- --watch",
+    "tdd": "<%- npmTddString %>",
     "transpile": "babel index.js --out-file index.es5.js",
     "prepublish": "npm run transpile",
     "clean": "rimraf index.es5.js",
@@ -34,7 +34,6 @@
   },
   "homepage": "https://github.com/<%= githubUsername %>/<%= moduleName %>#readme",
   "devDependencies": {
-    "chokidar-cli": "^1.2.0",
     "coveralls": "^2.11.8",
     "npm-run-all": "^1.5.1",
     "nyc": "^6.0.0",

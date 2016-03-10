@@ -174,7 +174,7 @@ module.exports = yeoman.Base.extend({
       }
 
       if (!this.testFramework) {
-        throw new Error('Unexpected test frameworl: ' + this.props.moduleTest);
+        throw new Error('Unexpected test framework: ' + this.props.moduleTest);
       }
 
       if (this.shouldSkipAll) {

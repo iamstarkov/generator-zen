@@ -15,6 +15,7 @@ var ifEmpty = require('if-empty');
 var slugify = require('underscore.string').slugify;
 var storedYoDefaults = require('stored-yo-defaults');
 var sortedObject = require('sorted-object');
+var depsObject = require('deps-object');
 
 // name :: String | Object -> String
 var name = R.ifElse(R.is(String), R.identity, R.pipe(R.keys, R.head));
@@ -24,12 +25,6 @@ var options = R.ifElse(R.is(String), R.always({}), R.pipe(R.values, R.head));
 
 // rejectNil :: Object -> Object
 var rejectNil = R.reject(R.isNil);
-
-// depName :: String -> String
-var depName = R.pipe(R.split('@'), R.head);
-
-// depVersion :: String -> String
-var depVersion = R.pipe(R.split('@'), R.last);
 
 var npmTestStrings = {
   mocha: 'mocha --require babel-register',
@@ -234,32 +229,40 @@ module.exports = yeoman.Base.extend({
     cpTpl('_test-' + this.props.moduleTest + '.js', 'test.js');
 
     var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    var devDeps = R.prop(this.props.moduleTest, testDevDeps).reduce(function (state, dep) {
-      return R.merge(state, R.zipObj([depName(dep)], [depVersion(dep)]));
-    }, {});
-    pkg.devDependencies = sortedObject(R.merge((pkg.devDependencies || {}), devDeps));
-    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+    var currentDeps = pkg.devDependencies || {};
 
-    var commitsRaw = spawnSync('git', ['log', '--oneline']).stdout.toString();
-    var commits = commitsRaw.split('\n').filter(Boolean);
-    var commitMessage = '☯ zen ' + (R.isEmpty(commits) ? 'init' : 'update');
+    return depsObject(R.prop(this.props.moduleTest, testDevDeps))
+      .then(function (testDeps) {
+        pkg.devDependencies = sortedObject(R.merge(currentDeps, testDeps));
+        this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
-    [
-      { travis: { config: { after_script: ['npm run coveralls'] } } },
-      { babel: { config: { plugins: ['add-module-exports'] } } },
-      { 'eslint-init': { config: { extends: 'airbnb/base', plugins: ['require-path-exists'] } } },
-      { 'git-init': { commit: this.options.commit ? this.options.commit : commitMessage } },
-    ].forEach(function (input) {
-      this.composeWith(
-        name(input),
-        { options: R.merge(options(input), {
-          'skip-install': this.options.perfomant
-                ? true
-                : this.options['skip-install'],
-        }) },
-        { local: require.resolve('generator-' + name(input)) }
-      );
-    }.bind(this));
+        var commitsRaw = spawnSync('git', ['log', '--oneline']).stdout.toString();
+        var commits = commitsRaw.split('\n').filter(Boolean);
+        var commitMessage = '☯ zen ' + (R.isEmpty(commits) ? 'init' : 'update');
+
+        [
+          { travis: { config: {
+            after_script: ['npm run coveralls'] } } },
+          { babel: { config: {
+            plugins: ['add-module-exports'] } } },
+          { 'eslint-init': { config: {
+            extends: 'airbnb/base',
+            plugins: ['require-path-exists'] } } },
+          { 'git-init': {
+            commit: this.options.commit ? this.options.commit : commitMessage } },
+        ].forEach(function (input) {
+          this.composeWith(
+            name(input),
+            { options: R.merge(options(input), {
+              'skip-install': this.options.perfomant
+              ? true
+              : this.options['skip-install'],
+            }) },
+            { local: require.resolve('generator-' + name(input)) }
+          );
+        }.bind(this));
+      }.bind(this))
+      .catch(function (err) { throw err; });
   },
   install: function () {
     if (!this.options['skip-install']) {

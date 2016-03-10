@@ -42,6 +42,7 @@
     "yeoman-assert": "^2.0.0"
   },
   "dependencies": {
+    "deps-object": "^1.0.1",
     "generator-babel": "^2.0.0",
     "generator-eslint-init": "^1.0.0",
     "generator-git-init": "^1.1.0",

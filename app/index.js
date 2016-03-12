@@ -14,8 +14,8 @@ var normalizeUrl = require('normalize-url');
 var ifEmpty = require('if-empty');
 var slugify = require('underscore.string').slugify;
 var storedYoDefaults = require('stored-yo-defaults');
-var sortedObject = require('sorted-object');
 var depsObject = require('deps-object');
+var sortedObject = require('sorted-object');
 var testFrameworksHash = require('./test-frameworks');
 
 // name :: String | Object -> String
@@ -58,6 +58,25 @@ module.exports = yeoman.Base.extend({
     this.option('commit', { type: String, required: false, alias: 'c',
       desc: 'Commit message, optional',
     });
+
+    // helpers
+    this.saveDepsToPkg = function (deps) {
+      var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+      var currentDeps = pkg.devDependencies || {};
+      var mergedDeps = Object.assign({}, currentDeps, deps);
+      var sortedDeps = sortedObject(mergedDeps);
+      pkg.devDependencies = sortedDeps;
+      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+    };
+
+    this.commitMessage = function commitMessage() {
+      if (this.options.commit) {
+        return this.options.commit;
+      }
+      var commitsRaw = spawnSync('git', ['log', '--oneline']).stdout.toString();
+      var commits = commitsRaw.split('\n').filter(Boolean);
+      return '☯ zen ' + (R.isEmpty(commits) ? 'init' : 'update');
+    };
   },
   initializing: function () {
     this.firstTime = !this._globalConfig.getAll().promptValues;
@@ -219,27 +238,17 @@ module.exports = yeoman.Base.extend({
     cpTpl('gitignore', '.gitignore');
     cpTpl('_test-' + this.props.moduleTest + '.js', 'test.js');
 
-    var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    var currentDeps = pkg.devDependencies || {};
     return depsObject(this.testFramework.deps)
-      .then(function (testDeps) {
-        pkg.devDependencies = sortedObject(R.merge(currentDeps, testDeps));
-        this.fs.writeJSON(this.destinationPath('package.json'), pkg);
-
-        var commitsRaw = spawnSync('git', ['log', '--oneline']).stdout.toString();
-        var commits = commitsRaw.split('\n').filter(Boolean);
-        var commitMessage = '☯ zen ' + (R.isEmpty(commits) ? 'init' : 'update');
+      .then(function (devDeps) {
+        this.saveDepsToPkg(devDeps);
 
         [
-          { travis: { config: {
-            after_script: ['npm run coveralls'] } } },
-          { babel: { config: {
-            plugins: ['add-module-exports'] } } },
+          { travis: { config: { after_script: ['npm run coveralls'] } } },
+          { babel: { config: { plugins: ['add-module-exports'] } } },
           { 'eslint-init': { config: {
             extends: 'airbnb/base',
             plugins: ['require-path-exists'] } } },
-          { 'git-init': {
-            commit: this.options.commit ? this.options.commit : commitMessage } },
+          { 'git-init': { commit: this.commitMessage() } },
         ].forEach(function (input) {
           this.composeWith(
             name(input),

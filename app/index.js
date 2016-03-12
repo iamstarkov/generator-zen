@@ -63,7 +63,7 @@ module.exports = yeoman.Base.extend({
     this.saveDepsToPkg = function (deps) {
       var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
       var currentDeps = pkg.devDependencies || {};
-      var mergedDeps = Object.assign({}, currentDeps, deps);
+      var mergedDeps = R.merge(currentDeps, deps);
       var sortedDeps = sortedObject(mergedDeps);
       pkg.devDependencies = sortedDeps;
       this.fs.writeJSON(this.destinationPath('package.json'), pkg);

@@ -54,7 +54,7 @@
     "ramda": "^0.19.1",
     "sorted-object": "^1.0.0",
     "spawn-sync": "^1.0.15",
-    "split-keywords": "^2.0.0",
+    "split-keywords": "^2.0.1",
     "stored-yo-defaults": "^1.0.0",
     "superb": "^1.2.0",
     "underscore.string": "^3.1.1",

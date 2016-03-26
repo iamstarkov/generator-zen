@@ -12,7 +12,7 @@ var testFrameworksHash = {
   ava: {
     test: 'ava --require babel-register',
     tdd: 'npm test -- --watch',
-    deps: ['ava@^0.12.0'],
+    deps: ['ava@^0.13.0'],
   },
 };
 

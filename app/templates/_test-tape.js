@@ -1,8 +1,10 @@
 import test from 'tape';
-import <%= camelModuleName %> from './index';
+import j from './index';
 
-test('<%= camelModuleName %>', ({ equal, end }) => {
-  equal(<%= camelModuleName %>('unicorns'), 'unicorns', 'basic')
-  equal(<%= camelModuleName %>(), undefined, 'invalid input');
+test('j', ({ equal, throws, end }) => {
+  equal(j('unicorns'), 'unicorns', 'basic')
+
+  throws(() => { j(); }, TypeError, 'empty input');
+  throws(() => { j(2); }, TypeError, 'invalid input');
   end();
 });

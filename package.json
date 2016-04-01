@@ -35,7 +35,7 @@
   "homepage": "https://github.com/iamstarkov/generator-zen#readme",
   "devDependencies": {
     "babel-eslint": "^6.0.0",
-    "eslint": "^1.10.3",
+    "eslint": "^2.6.0",
     "eslint-config-airbnb": "^4.0.0",
     "eslint-plugin-require-path-exists": "^1.1.4",
     "mocha": "^2.3.3",

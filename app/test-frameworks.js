@@ -10,7 +10,7 @@ var testFrameworksHash = {
     deps: ['tap-spec@^4.1.1', 'tape@^4.4.0', 'chokidar-cli@^1.2.0'],
   },
   ava: {
-    test: 'ava --require babel-register --timeout=2s',
+    test: 'ava --require babel-register',
     tdd: 'npm test -- --watch',
     deps: ['ava@^0.14.0', 'chokidar@^1.4.3'],
   },

@@ -32,6 +32,7 @@ it('generates expected files', function (done) {
         'test.js',
         'README.md',
         '.eslintrc.json',
+        'CHANGELOG.md',
         '.git'
       ]);
       assert.fileContent('README.md', '[![Unix Build Status][travis-image]][travis-url]');

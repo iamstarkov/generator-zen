@@ -244,6 +244,7 @@ module.exports = yeoman.Base.extend({
     cpTpl('editorconfig', '.editorconfig');
     cpTpl('gitignore', '.gitignore');
     cpTpl('gitignore', '.gitignore');
+    cpTpl('CHANGELOG.md', 'CHANGELOG.md');
 
     cpTpl('_test-' + this.props.moduleTest + '.js', 'test.js');
 

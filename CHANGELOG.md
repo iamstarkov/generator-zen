@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Update eslint setup to use [`eslint-config-airbnb-base`][eslint-config-airbnb-base]
 * Add `lint` npm script.
 * Examples for `async` function and related tests.
+* Add Changelog support
 
 [rollup]: https://github.com/rollup/rollup
 [eslint-config-airbnb-base]: https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base

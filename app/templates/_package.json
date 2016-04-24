@@ -9,6 +9,7 @@
     "index.js"
   ],
   "scripts": {
+    "lint": "eslint .",
     "watch": "npm run transpile -- --watch",
     "coverage": "nyc -r=text -r=lcov npm test",
     "precoveralls": "npm run coverage",

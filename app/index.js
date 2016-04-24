@@ -246,8 +246,8 @@ module.exports = yeoman.Base.extend({
           { travis: { config: { after_script: ['npm run coveralls'] } } },
           { babel: { config: { plugins: ['add-module-exports'] } } },
           { 'eslint-init': { config: {
-            extends: 'airbnb/base',
-            plugins: ['require-path-exists'] } } },
+            extends: 'airbnb-base',
+            plugins: ['require-path-exists', 'import'] } } },
           { 'git-init': { commit: this.commitMessage() } },
         ].forEach(function (input) {
           this.composeWith(

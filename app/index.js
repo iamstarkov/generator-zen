@@ -1,5 +1,5 @@
 'use strict';
-/* eslint-disable func-names, vars-on-top */
+/* eslint-disable func-names, vars-on-top, no-underscore-dangle */
 
 var yeoman = require('yeoman-generator');
 var humanizeUrl = require('humanize-url');
@@ -34,29 +34,29 @@ module.exports = yeoman.Base.extend({
       desc: ([
         'Node module’s name: "$ yo zen pify";',
         'node module will be initialized in created folder',
-        'and you will be redirected to that folder',
-      ].join('\n\t') + '\n    '),
+        'and you will be redirected to that folder'
+      ].join('\n\t') + '\n    ')
     });
     this.option('all', { type: Boolean, required: false, alias: 'a', defaults: false,
-      desc: 'Ask all questions',
+      desc: 'Ask all questions'
     });
     this.option('skip', { type: Boolean, required: false, alias: 's', defaults: false,
-      desc: 'Ask minimum questions, like `$ npm init --yes/--force` ',
+      desc: 'Ask minimum questions, like `$ npm init --yes/--force` '
     });
     this.option('yes', { type: Boolean, required: false, alias: 'y', defaults: false,
-      desc: 'Same as `--skip`',
+      desc: 'Same as `--skip`'
     });
     this.option('force', { type: Boolean, required: false, alias: 'f', defaults: false,
-      desc: 'Same as `--skip`',
+      desc: 'Same as `--skip`'
     });
     this.option('perfomant', { type: Boolean, required: false, alias: 'p', defaults: false,
-      desc: 'Perfomant install, ensure you have pnpm installed globally (`$ npm i -g pnpm`)',
+      desc: 'Perfomant install, ensure you have pnpm installed globally (`$ npm i -g pnpm`)'
     });
     this.option('debug', { type: Boolean, required: false, alias: 'd', defaults: false,
-      desc: 'Debug mode',
+      desc: 'Debug mode'
     });
     this.option('commit', { type: String, required: false, alias: 'c',
-      desc: 'Commit message, optional',
+      desc: 'Commit message, optional'
     });
 
     // helpers
@@ -114,38 +114,45 @@ module.exports = yeoman.Base.extend({
       message: '☯ your name:',
       store: true,
       validate: ifEmpty('You have to provide name'),
-      when: shouldAskPersonPrompts('name'),
+      when: shouldAskPersonPrompts('name')
     }, {
       name: 'email',
       message: '☯ your email:',
       store: true,
       validate: ifEmpty('You have to provide email'),
-      when: shouldAskPersonPrompts('email'),
+      when: shouldAskPersonPrompts('email')
     }, {
       name: 'website',
       message: '☯ your website:',
       store: true,
       validate: ifEmpty('You have to provide website'),
       filter: normalizeUrl,
-      when: shouldAskPersonPrompts('website'),
+      when: shouldAskPersonPrompts('website')
     }, {
       name: 'githubUsername',
       message: '☯ your github username:',
       store: true,
       validate: ifEmpty('You have to provide a username'),
-      when: shouldAskPersonPrompts('githubUsername'),
+      when: shouldAskPersonPrompts('githubUsername')
+    }, {
+      name: 'appveyorSupport',
+      message: '☯ appveyor CI:',
+      type: 'confirm',
+      default: true,
+      store: true,
+      when: shouldAskPrefPrompts
     }, {
       name: 'moduleVersion',
       message: '☯ preferred version to start:',
       store: true,
       default: '0.0.0',
-      when: shouldAskPrefPrompts,
+      when: shouldAskPrefPrompts
     }, {
       name: 'moduleLicense',
       message: '☯ preferred license:',
       store: true,
       default: 'MIT',
-      when: shouldAskPrefPrompts,
+      when: shouldAskPrefPrompts
     }, {
       name: 'moduleTest',
       message: '☯ preferred test framework:',
@@ -153,22 +160,22 @@ module.exports = yeoman.Base.extend({
       choices: this.testFrameworksKeys,
       store: true,
       default: 1,
-      when: shouldAskPrefPrompts,
+      when: shouldAskPrefPrompts
     }, {
       name: 'moduleName',
       message: '☯ name:',
       default: slugify(this.name || this.appname),
       filter: slugify,
-      when: !this.shouldSkipAll,
+      when: !this.shouldSkipAll
     }, {
       name: 'moduleDesc',
       message: '☯ description:',
-      when: !this.shouldSkipAll,
+      when: !this.shouldSkipAll
     }, {
       name: 'moduleKeywords',
       message: '☯ keywords:',
       filter: splitKeywords,
-      when: !this.shouldSkipAll,
+      when: !this.shouldSkipAll
     }];
 
     this.prompt(questions, function (inputAnswers) {
@@ -176,7 +183,7 @@ module.exports = yeoman.Base.extend({
         storedYoDefaults(questions), // Default values will be overrided by saved ones
         this.savedAnswers,           // Saved values will be overrided by user input
         { moduleName: this.name },   // argument name will be used only if user input skipped
-        rejectNil(inputAnswers),
+        rejectNil(inputAnswers)
       ]);
       this.testFramework = R.prop(this.props.moduleTest, testFrameworksHash);
 
@@ -216,6 +223,7 @@ module.exports = yeoman.Base.extend({
       moduleVersion: this.props.moduleVersion,
       moduleLicense: this.props.moduleLicense,
       moduleTest: this.props.moduleTest,
+      appveyorSupport: this.props.appveyorSupport,
       camelModuleName: camelize(this.props.moduleName),
       githubUsername: this.props.githubUsername,
       name: this.props.name,
@@ -223,7 +231,7 @@ module.exports = yeoman.Base.extend({
       website: this.props.website,
       humanizedWebsite: humanizeUrl(this.props.website),
       npmTestString: this.testFramework.test,
-      npmTddString: this.testFramework.tdd,
+      npmTddString: this.testFramework.tdd
     };
 
     var cpTpl = function (from, to) {
@@ -236,7 +244,12 @@ module.exports = yeoman.Base.extend({
     cpTpl('editorconfig', '.editorconfig');
     cpTpl('gitignore', '.gitignore');
     cpTpl('gitignore', '.gitignore');
+
     cpTpl('_test-' + this.props.moduleTest + '.js', 'test.js');
+
+    if (this.props.appveyorSupport) {
+      cpTpl('appveyor.yml', 'appveyor.yml');
+    }
 
     return depsObject(this.testFramework.deps)
       .then(function (devDeps) {
@@ -248,14 +261,14 @@ module.exports = yeoman.Base.extend({
           { 'eslint-init': { config: {
             extends: 'airbnb-base',
             plugins: ['require-path-exists', 'import'] } } },
-          { 'git-init': { commit: this.commitMessage() } },
+          { 'git-init': { commit: this.commitMessage() } }
         ].forEach(function (input) {
           this.composeWith(
             name(input),
             { options: R.merge(options(input), {
               'skip-install': this.options.perfomant
               ? true
-              : this.options['skip-install'],
+              : this.options['skip-install']
             }) },
             { local: require.resolve('generator-' + name(input)) }
           );
@@ -271,5 +284,5 @@ module.exports = yeoman.Base.extend({
         this.npmInstall();
       }
     }
-  },
+  }
 });

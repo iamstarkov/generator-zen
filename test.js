@@ -13,16 +13,19 @@ var defaults = {
   githubUsername: 'username',
   website: 'test.com',
   moduleDesc: 'Your awsm module!',
+  appveyorSupport: true,
 };
 
 it('generates expected files', function (done) {
   helpers.run(path.join(__dirname, './app'))
+    .withOptions({ all: true })
     .withPrompts(R.merge(defaults, { moduleTest: 'tape' }))
     .on('end', function () {
       assert.file([
         '.editorconfig',
         '.gitignore',
         '.travis.yml',
+        'appveyor.yml',
         '.babelrc',
         'package.json',
         'index.js',
@@ -31,6 +34,16 @@ it('generates expected files', function (done) {
         '.eslintrc.json',
         '.git',
       ]);
+      done();
+    });
+});
+
+it('generates expected files without appveyor', function (done) {
+  helpers.run(path.join(__dirname, './app'))
+    .withOptions({ all: true })
+    .withPrompts(R.merge(defaults, { appveyorSupport: false }))
+    .on('end', function () {
+      assert.noFile('appveyor.yml');
       done();
     });
 });

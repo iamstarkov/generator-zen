@@ -3,8 +3,8 @@
 import { equal, throws } from 'assert';
 import <%= camelModuleName %> from './index';
 
-it('should <%= camelModuleName %>', () =>
+it('basic', () =>
   equal(<%= camelModuleName %>('unicorns'), 'unicorns'));
 
-it('should throw on empty input', () => throws(() => { <%= camelModuleName %>(); }, TypeError));
-it('should throw on invalid input', () => throws(() => { <%= camelModuleName %>(2); }, TypeError));
+it('empty input', () => throws(() => { <%= camelModuleName %>(); }, TypeError));
+it('invalid input', () => throws(() => { <%= camelModuleName %>(2); }, TypeError));

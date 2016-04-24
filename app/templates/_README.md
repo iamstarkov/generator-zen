@@ -15,14 +15,20 @@
 ## Usage
 
 ```js
-import <%= camelModuleName %> from '<%= moduleName %>';
+import { <%= camelModuleName %>, <%= camelModuleName %>Async } from '<%= moduleName %>';
 
 <%= camelModuleName %>('unicorns'); // unicorns
+<%= camelModuleName %>Async('unicorns')
+  .then(result => console.log(result)); // unicorns
 ```
 
 ## API
 
 ### <%= camelModuleName %>(input, [options])
+
+### <%= camelModuleName %>Async(input, [options])
+
+Return a promise that resolves to `result`.
 
 #### input
 

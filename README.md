@@ -1,7 +1,8 @@
 # generator-zen
 
 [![NPM version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
+[![Unix Build Status][travis-image]][travis-url]
+[![Windows Build Status][appveyor-image]][appveyor-url]
 [![Dependency Status][depstat-image]][depstat-url]
 
 > ☯ zen node module scaffolder
@@ -77,7 +78,10 @@ MIT © [Vladimir Starkov](https://iamstarkov.com/)
 [npm-image]: https://img.shields.io/npm/v/generator-zen.svg?style=flat-square
 
 [travis-url]: https://travis-ci.org/iamstarkov/generator-zen
-[travis-image]: https://img.shields.io/travis/iamstarkov/generator-zen.svg?style=flat-square
+[travis-image]: https://img.shields.io/travis/iamstarkov/generator-zen.svg?style=flat-square&label=unix
+
+[appveyor-url]: https://ci.appveyor.com/project/iamstarkov/generator-zen
+[appveyor-image]: https://img.shields.io/appveyor/ci/iamstarkov/generator-zen.svg?style=flat-square&label=windows
 
 [depstat-url]: https://david-dm.org/iamstarkov/generator-zen
 [depstat-image]: https://david-dm.org/iamstarkov/generator-zen.svg?style=flat-square

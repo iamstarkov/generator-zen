@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 2.1.9
 
 * Add [rollup][rollup] support
+* Add Appveyor support for testing in Windows CI
 * Update eslint setup to use [`eslint-config-airbnb-base`][eslint-config-airbnb-base]
 * Add `lint` npm script.
 * Examples for `async` function and related tests.

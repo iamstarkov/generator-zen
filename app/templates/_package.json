@@ -3,8 +3,10 @@
   "version": "<%= moduleVersion %>",
   "description": "<%= moduleDesc %>",
   "main": "index.es5.js",
+  "jsnext:main": "index.js",
   "files": [
-    "index.es5.js"
+    "index.es5.js",
+    "index.js"
   ],
   "scripts": {
     "watch": "npm run transpile -- --watch",

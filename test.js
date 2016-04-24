@@ -34,6 +34,8 @@ it('generates expected files', function (done) {
         '.eslintrc.json',
         '.git',
       ]);
+      assert.fileContent('README.md', '[![Unix Build Status][travis-image]][travis-url]');
+      assert.fileContent('README.md', '[![Windows Build Status][appveyor-image]][appveyor-url]');
       done();
     });
 });
@@ -44,6 +46,7 @@ it('generates expected files without appveyor', function (done) {
     .withPrompts(R.merge(defaults, { appveyorSupport: false }))
     .on('end', function () {
       assert.noFile('appveyor.yml');
+      assert.fileContent('README.md', '[![Build Status][travis-image]][travis-url]');
       done();
     });
 });

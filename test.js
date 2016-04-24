@@ -65,6 +65,7 @@ it('generates all needed for mocha', function (done) {
           devDependencies: devDeps
         });
         assert.fileContent('test.js', /mocha/);
+        assert.noJsonFileContent('.eslintrc.json', { parser: 'babel-eslint' });
         done();
       });
   });
@@ -84,6 +85,7 @@ it('generates all needed for tape', function (done) {
           devDependencies: devDeps
         });
         assert.fileContent('test.js', /tape/);
+        assert.noJsonFileContent('.eslintrc.json', { parser: 'babel-eslint' });
         done();
       });
   });
@@ -103,6 +105,7 @@ it('generates all needed for ava', function (done) {
           devDependencies: devDeps
         });
         assert.fileContent('test.js', /ava/);
+        assert.jsonFileContent('.eslintrc.json', { parser: 'babel-eslint' });
         done();
       });
   });

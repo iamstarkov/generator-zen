@@ -13,7 +13,7 @@ var defaults = {
   githubUsername: 'username',
   website: 'test.com',
   moduleDesc: 'Your awsm module!',
-  appveyorSupport: true,
+  appveyorSupport: true
 };
 
 it('generates expected files', function (done) {
@@ -32,7 +32,7 @@ it('generates expected files', function (done) {
         'test.js',
         'README.md',
         '.eslintrc.json',
-        '.git',
+        '.git'
       ]);
       assert.fileContent('README.md', '[![Unix Build Status][travis-image]][travis-url]');
       assert.fileContent('README.md', '[![Windows Build Status][appveyor-image]][appveyor-url]');
@@ -62,7 +62,7 @@ it('generates all needed for mocha', function (done) {
       .on('end', function () {
         assert.jsonFileContent('package.json', {
           scripts: scripts,
-          devDependencies: devDeps,
+          devDependencies: devDeps
         });
         assert.fileContent('test.js', /mocha/);
         done();
@@ -81,7 +81,7 @@ it('generates all needed for tape', function (done) {
       .on('end', function () {
         assert.jsonFileContent('package.json', {
           scripts: scripts,
-          devDependencies: devDeps,
+          devDependencies: devDeps
         });
         assert.fileContent('test.js', /tape/);
         done();
@@ -100,7 +100,7 @@ it('generates all needed for ava', function (done) {
       .on('end', function () {
         assert.jsonFileContent('package.json', {
           scripts: scripts,
-          devDependencies: devDeps,
+          devDependencies: devDeps
         });
         assert.fileContent('test.js', /ava/);
         done();

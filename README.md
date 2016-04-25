@@ -58,10 +58,11 @@ Speed up dependencies installing with `--perfomant/-p` option, it uses `pnpm`, s
 1. Push it to your github repo
 2. Enable your project on travis: https://travis-ci.org/profile/
 3. Enable your project on coveralls: https://coveralls.io/repos/new
-4. Write some tests in tests.js
-5. Run tdd mode: `npm run tdd`
-6. Write your module to pass the tests
-7. When all tests are green bump major version and publish it:
+4. Enable your project on appveyor: https://ci.appveyor.com/projects/new
+5. Write some tests in tests.js
+6. Run tdd mode: `npm run tdd`
+7. Write your module to pass the tests
+8. When all tests are green bump major version and publish it:
   ```
   npm version major
   npm publish

@@ -32,7 +32,7 @@ Return a promise that resolves to `result`.
 
 #### input
 
-*Required*  
+*Required*
 Type: `String`
 
 Lorem ipsum.
@@ -41,7 +41,7 @@ Lorem ipsum.
 
 ##### foo
 
-Type: `Boolean`  
+Type: `Boolean`
 Default: `false`
 
 Lorem ipsum.

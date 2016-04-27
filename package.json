@@ -48,7 +48,7 @@
     "generator-babel": "^2.0.0",
     "generator-eslint-init": "^1.0.0",
     "generator-git-init": "^1.1.0",
-    "generator-travis": "^1.2.3",
+    "generator-travis": "^1.3.0",
     "humanize-url": "^1.0.1",
     "if-empty": "^1.0.0",
     "mkdirp": "^0.5.1",

@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.1.10
+
+* Update ava tests to be more convenient
+* Add nodejs v6 to CI env
+
 ## 2.1.9
 
 * Add [rollup][rollup] support

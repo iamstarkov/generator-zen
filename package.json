@@ -1,6 +1,6 @@
 {
   "name": "generator-zen",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "description": "☯ zen node module scaffolder",
   "files": [
     "app"

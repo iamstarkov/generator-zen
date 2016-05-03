@@ -60,7 +60,7 @@
     "stored-yo-defaults": "^1.0.0",
     "superb": "^1.2.0",
     "underscore.string": "^3.1.1",
-    "yeoman-generator": "^0.22.5",
+    "yeoman-generator": "^0.23.2",
     "yeoman-test": "^1.0.0"
   }
 }

@@ -61,6 +61,6 @@
     "superb": "^1.2.0",
     "underscore.string": "^3.1.1",
     "yeoman-generator": "^0.22.5",
-    "yeoman-test": "^1.0.0"
+    "yeoman-test": "^1.4.0"
   }
 }

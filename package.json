@@ -52,7 +52,7 @@
     "humanize-url": "^1.0.1",
     "if-empty": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "normalize-url": "^1.3.0",
+    "normalize-url": "^1.5.1",
     "ramda": "^0.21.0",
     "sorted-object": "^2.0.0",
     "spawn-sync": "^1.0.15",

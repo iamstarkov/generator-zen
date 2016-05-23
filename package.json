@@ -40,7 +40,7 @@
     "eslint-config-airbnb-base": "^1.0.4",
     "eslint-plugin-import": "^1.5.0",
     "eslint-plugin-require-path-exists": "^1.1.4",
-    "mocha": "^2.3.3",
+    "mocha": "^2.5.0",
     "yeoman-assert": "^2.0.0"
   },
   "dependencies": {

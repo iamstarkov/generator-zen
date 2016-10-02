@@ -44,7 +44,7 @@ it('generates expected files', function (done) {
 it('generates expected files without appveyor', function (done) {
   helpers.run(path.join(__dirname, './app'))
     .withOptions({ all: true })
-    .withPrompts(R.merge(defaults, { appveyorSupport: false }))
+    .withPrompts(R.merge(defaults, { appveyorSupport: false, moduleTest: 'tape' }))
     .on('end', function () {
       assert.noFile('appveyor.yml');
       assert.fileContent('README.md', '[![Build Status][travis-image]][travis-url]');

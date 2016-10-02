@@ -2,7 +2,6 @@
 /* eslint-disable func-names, vars-on-top, no-underscore-dangle */
 
 var yeoman = require('yeoman-generator');
-var humanizeUrl = require('humanize-url');
 var camelize = require('underscore.string').camelize;
 var R = require('ramda');
 var cat = require('./cat');
@@ -229,7 +228,6 @@ module.exports = yeoman.Base.extend({
       name: this.props.name,
       email: this.props.email,
       website: this.props.website,
-      humanizedWebsite: humanizeUrl(this.props.website),
       npmTestString: this.testFramework.test,
       npmTddString: this.testFramework.tdd
     };
@@ -242,7 +240,6 @@ module.exports = yeoman.Base.extend({
     cpTpl('_package.json', 'package.json');
     cpTpl('_README.md', 'README.md');
     cpTpl('editorconfig', '.editorconfig');
-    cpTpl('gitignore', '.gitignore');
     cpTpl('gitignore', '.gitignore');
     cpTpl('CHANGELOG.md', 'CHANGELOG.md');
 
